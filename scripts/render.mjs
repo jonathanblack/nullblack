@@ -2,7 +2,7 @@ import { isPlaceholder } from "../src/site.config.mjs";
 
 const LOCKUP = "/assets/brand/lockup-horizontal-light-on-dark.svg";
 
-function escapeHtml(value) {
+export function escapeHtml(value) {
   return String(value).replace(/[&<>"']/g, (char) => {
     switch (char) {
       case "&":
@@ -69,9 +69,9 @@ function organizationJsonLd(site) {
   return JSON.stringify(data).replace(/</g, "\\u003c");
 }
 
-function head(site, { title, description }) {
-  const canonical = site.url.endsWith("/") ? site.url : `${site.url}/`;
-  const image = new URL("/og.png", canonical).href;
+function head(site, { title, description, path = "/" }) {
+  const canonical = new URL(path, site.url).href;
+  const image = new URL("/og.png", site.url).href;
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -121,12 +121,41 @@ function header() {
   </header>`;
 }
 
-function footer(site) {
+const HUB = [
+  { href: "/privacy/", label: "privacy" },
+  { href: "/support/", label: "support" },
+  { href: "/terms/", label: "terms" },
+  { href: "/press/", label: "press" },
+];
+
+function footer(site, path = "/") {
+  const links = HUB.map((item) => {
+    const current = path === item.href ? ` aria-current="page"` : "";
+    return `<a href="${item.href}"${current}>${item.label}</a>`;
+  }).join("\n        ");
   return `<footer class="site-footer">
     <div class="shell">
+      <nav class="footer-nav" aria-label="studio">
+        ${links}
+      </nav>
       <p>© ${escapeHtml(site.year)} nullblack</p>
     </div>
   </footer>`;
+}
+
+export function renderPage(site, { title, description, path, body }) {
+  return `${head(site, { title: `${title} — ${site.name}`, description, path })}
+<body>
+  ${header()}
+  <main id="content" class="doc">
+    <div class="shell">
+      ${body}
+    </div>
+  </main>
+  ${footer(site, path)}
+</body>
+</html>
+`;
 }
 
 export function renderIndex(site) {
@@ -168,7 +197,7 @@ export function renderIndex(site) {
       </div>
     </section>
   </main>
-  ${footer(site)}
+  ${footer(site, "/")}
 </body>
 </html>
 `;
@@ -184,7 +213,7 @@ export function renderNotFound(site) {
       <p>nothing here. <a href="/">back to nullblack</a></p>
     </div>
   </main>
-  ${footer(site)}
+  ${footer(site, "/")}
 </body>
 </html>
 `;

@@ -324,10 +324,109 @@ a.card:focus-visible {
   padding-block: 1.5rem 2.5rem;
 }
 
+.footer-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1.25rem;
+  margin: 0 0 0.35rem;
+}
+
+.footer-nav a {
+  color: var(--muted);
+  text-decoration: none;
+  min-height: 2.75rem;
+  display: inline-flex;
+  align-items: center;
+}
+
+.footer-nav a:hover,
+.footer-nav a[aria-current="page"] {
+  color: var(--fg);
+}
+
 .site-footer p {
   margin: 0;
   color: var(--faint);
   font-size: 0.8125rem;
+}
+
+.doc {
+  padding-block: clamp(2.25rem, 6vw, 4rem);
+}
+
+.doc h1 {
+  margin: 0 0 0.75rem;
+  font-size: clamp(1.6rem, 3vw, 2.15rem);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 1.2;
+}
+
+.doc h2 {
+  margin: 2rem 0 0.55rem;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: var(--fg);
+}
+
+.doc h3 {
+  margin: 1.25rem 0 0.35rem;
+  font-size: 0.9375rem;
+  font-weight: 700;
+}
+
+.doc p,
+.doc li {
+  max-width: 40rem;
+  color: var(--muted);
+}
+
+.doc p {
+  margin: 0.7rem 0 0;
+}
+
+.doc ul,
+.doc ol {
+  margin: 0.7rem 0 0;
+  padding-left: 1.2rem;
+}
+
+.doc li + li {
+  margin-top: 0.35rem;
+}
+
+.doc a {
+  color: var(--fg);
+  text-underline-offset: 0.18em;
+}
+
+.doc .meta {
+  color: var(--faint);
+  font-size: 0.8125rem;
+}
+
+.downloads {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.downloads a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+  padding: 0.4rem 0.75rem;
+  border: 1px solid var(--line);
+  text-decoration: none;
+}
+
+.downloads a:hover {
+  background: #ffffff;
+  color: #000000;
+  border-color: #ffffff;
 }
 
 .missing {

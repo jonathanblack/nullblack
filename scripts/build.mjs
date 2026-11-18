@@ -1,6 +1,7 @@
 import { cp, mkdir, readFile, rm, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { hubPages } from "../src/hub.mjs";
 import { site } from "../src/site.config.mjs";
 import { renderIndex, renderNotFound } from "./render.mjs";
 
@@ -45,17 +46,24 @@ await mkdir(path.join(pub, "fonts"), { recursive: true });
 
 await writeFile(path.join(pub, "index.html"), renderIndex(site));
 await writeFile(path.join(pub, "404.html"), renderNotFound(site));
+const pages = hubPages(site);
+for (const page of pages) {
+  const dir = path.join(pub, page.dir);
+  await mkdir(dir, { recursive: true });
+  await writeFile(path.join(dir, "index.html"), page.html);
+}
 await writeFile(path.join(pub, "styles.css"), await readFile(path.join(root, "src", "styles.css")));
 await writeFile(path.join(pub, "site.webmanifest"), `${JSON.stringify(manifest, null, 2)}\n`);
 await writeFile(
   path.join(pub, "robots.txt"),
   "User-agent: *\nAllow: /\n\nSitemap: https://nullblack.com/sitemap.xml\n",
 );
+const locs = ["https://nullblack.com/", ...pages.map((page) => `https://nullblack.com${page.path}`)];
 await writeFile(
   path.join(pub, "sitemap.xml"),
   `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://nullblack.com/</loc></url>
+${locs.map((loc) => `  <url><loc>${loc}</loc></url>`).join("\n")}
 </urlset>
 `,
 );

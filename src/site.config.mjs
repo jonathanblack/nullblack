@@ -14,6 +14,7 @@
  * - games[jurassic-legacy].url
  * - games[sheerfall].url
  * - games[faded-maps].url
+ * - supportResponseTime
  * - social bluesky: confirm the profile. The URL below assumes
  *   nullblackgames.bsky.social. Replace it if the handle is a custom domain.
  */
@@ -26,6 +27,9 @@ export const site = {
   description: "small games, made late at night. The studio of Jonathan Black.",
   year: 2026,
   pressEmail: "hello@nullblack.com",
+  effectiveDate: "November 18, 2026",
+  // TODO: replace with a real reply window, for example "within 30 days".
+  supportResponseTime: "TODO",
   social: [
     { id: "x", label: "x", url: "https://x.com/nullblackgames" },
     { id: "tiktok", label: "tiktok", url: "https://www.tiktok.com/@nullblackgames" },
@@ -41,6 +45,7 @@ export const site = {
   games: [
     {
       id: "cyberdeck",
+      slug: "cyberdeck-runtime",
       title: "Cyberdeck: Runtime",
       description: "An incremental cyberpunk hacking game.",
       status: "Coming to Steam Early Access, iOS, and web.",
@@ -49,6 +54,7 @@ export const site = {
     },
     {
       id: "cyberdeck-packet",
+      slug: "cyberdeck-packet",
       title: "Cyberdeck: Packet",
       description: "A turn-based roguelike. Arrange a rig, then fight ICE.",
       // TODO: confirm the public platform line.
@@ -58,6 +64,7 @@ export const site = {
     },
     {
       id: "jurassic-legacy",
+      slug: "jurassic-legacy",
       title: "Jurassic Legacy",
       description: "A dinosaur lineage runner.",
       status: "Coming to iOS, Android, and Steam.",
@@ -66,6 +73,7 @@ export const site = {
     },
     {
       id: "sheerfall",
+      slug: "sheerfall",
       title: "Sheerfall",
       description: "A 3D co-op roguelike with eight classes and up to four players.",
       status: "Coming to web, then Steam.",
@@ -74,6 +82,7 @@ export const site = {
     },
     {
       id: "faded-maps",
+      slug: "fadedmaps",
       title: "Faded Maps",
       description: "A daily map-deduction puzzle.",
       status: "Play on the web.",

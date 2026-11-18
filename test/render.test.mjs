@@ -86,6 +86,48 @@ test("reduced motion keeps the cursor visible and still", async () => {
   assert.match(css, /\.caret\s*\{\s*animation:\s*none;/);
 });
 
+test("hub pages name the studio, the games, and the footer", async () => {
+  const { hubPages } = await import("../src/hub.mjs");
+  const pages = hubPages(site);
+  const paths = pages.map((page) => page.path);
+  for (const path of [
+    "/privacy/",
+    "/support/",
+    "/terms/",
+    "/press/",
+    "/fadedmaps/privacy/",
+    "/fadedmaps/support/",
+    "/sheerfall/privacy/",
+    "/sheerfall/support/",
+    "/cyberdeck-runtime/privacy/",
+    "/cyberdeck-runtime/support/",
+    "/cyberdeck-packet/privacy/",
+    "/cyberdeck-packet/support/",
+    "/jurassic-legacy/privacy/",
+    "/jurassic-legacy/support/",
+  ]) {
+    assert.ok(paths.includes(path), path);
+  }
+  const privacy = pages.find((page) => page.path === "/privacy/").html;
+  assert.match(privacy, /Jonathan Black, doing business as nullblack/);
+  assert.match(privacy, /hello@nullblack\.com/);
+  assert.match(privacy, /ca-pub-1117832063249065/);
+  assert.match(privacy, /AdMob/);
+  assert.match(privacy, /user:\/\/savegame\.json/);
+  assert.match(privacy, /noreply@jurassiclegacy\.com/);
+  assert.match(privacy, /noreply@cyberdeckpacket\.com/);
+  assert.match(privacy, /We did not find Steamworks/);
+  assert.doesNotMatch(privacy.replaceAll("©", ""), /\p{Extended_Pictographic}/u);
+  const support = pages.find((page) => page.path === "/support/").html;
+  assert.match(support, /Expected response time: TODO/);
+  assert.match(support, /href="\/privacy\/#deletion"/);
+  const home = renderIndex(site);
+  assert.match(home, /href="\/privacy\/"/);
+  assert.match(home, /href="\/support\/"/);
+  assert.match(home, /href="\/terms\/"/);
+  assert.match(home, /href="\/press\/"/);
+});
+
 test("404 page names nullblack and links home", () => {
   const html = renderNotFound(site);
   assert.match(html, /<title>404 — nullblack<\/title>/);

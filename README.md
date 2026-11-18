@@ -37,4 +37,6 @@ Every unpublished target in `src/site.config.mjs` is the string `TODO`. The page
 
 Press and contact is `hello@nullblack.com`. Social links for X, TikTok, YouTube, Twitch, Instagram, and Bluesky use `@nullblackgames`.
 
+Studio pages, also linked in the footer: `/privacy/`, `/support/`, `/terms/`, `/press/`, and `/<slug>/privacy/` plus `/<slug>/support/` for fadedmaps, sheerfall, cyberdeck-runtime, cyberdeck-packet, and jurassic-legacy.
+
 The wordmark is set in IBM Plex Mono, shipped as Latin woff2 files under `src/fonts/` with the SIL Open Font License.
