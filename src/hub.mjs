@@ -1,89 +1,56 @@
 import { escapeHtml, renderPage } from "../scripts/render.mjs";
 
-const REVIEWED = "November 18, 2026";
-
 function privacyBody(site) {
   const email = escapeHtml(site.pressEmail);
   const when = escapeHtml(site.effectiveDate);
   return `<h1>privacy</h1>
       <p class="meta">Effective ${when}. Jonathan Black, doing business as nullblack.</p>
-      <p>This policy covers nullblack.com and the games listed below. It describes what we found in the code reviewed on ${REVIEWED}. It does not describe a store build, a native project, or a branch we did not open.</p>
-      <p>Contact: <a href="mailto:${email}">${email}</a>.</p>
+      <p>This covers nullblack.com and the games below. Contact <a href="mailto:${email}">${email}</a>.</p>
 
       <h2>This website</h2>
-      <p>nullblack.com is a static site. These pages do not run analytics, advertising, or accounts. If you email us, we receive your address and whatever you write, and we use it to reply. The site code does not sell that mail.</p>
+      <p>This site does not use analytics, ads, or accounts. If you email us, we keep your address and your message so we can reply. We do not sell that mail.</p>
 
       <h2 id="fadedmaps">Faded Maps</h2>
-      <p>Reviewed in jonathanblack/fadedmaps: <code>src/ui/save.ts</code>, <code>src/ui/ads-native.ts</code>, <code>template.html</code>, and <code>capacitor.config.ts</code>.</p>
-      <ul>
-        <li>On the device, <code>localStorage</code> key <code>fadedmaps.journals.v1</code> holds daily and practice progress, campaign results, stats (played, solved, streak, best), and settings such as sound.</li>
-        <li><code>fadedmaps.sheets</code> keeps a few generated puzzles so a phone does not rebuild them. Older dailies beyond about fourteen, and older cached sheets beyond a handful, are dropped on save.</li>
-        <li>The website loads Google AdSense, publisher <code>ca-pub-1117832063249065</code>, from <code>pagead2.googlesyndication.com</code>. One banner sits under the result sheet.</li>
-        <li>The iOS app (Capacitor, app id <code>com.fadedmaps.game</code>) uses Google AdMob for that same 320 by 50 banner, only while the result sheet is open. It requests Apple's tracking permission, then Google's consent form where Google marks one as required. The source comment says declining either still shows ads that are not personalized. The banner unit id is injected at build time.</li>
-      </ul>
-      <p>We did not find an account, a cloud save, a leaderboard, a crash-reporting SDK, or a store billing SDK in the files we opened.</p>
+      <p>Your puzzles, streaks, and settings stay on your device. Older daily puzzles are dropped after about two weeks.</p>
+      <p>The website and the iOS and Android apps can show a Google ad under the results. On iOS, the app may ask permission to track you across other apps. You can say no and still see ads. Those ads are not tied to an account. There is no account and no leaderboard.</p>
 
       <h2 id="sheerfall">Sheerfall</h2>
-      <p>Reviewed in jonathanblack/sheerfall: <code>src/toys/fault/ads.ts</code>, <code>stats.ts</code>, <code>daily.ts</code>, <code>net.ts</code>, and <code>src/server/stats.ts</code>.</p>
-      <ul>
-        <li>On sheerfall.com the game loads Google AdSense H5 Games Ads for the same publisher id. It may show an interstitial after a finished run, and an optional rewarded ad to reroll a boon. Rewarded ads are not offered on the daily. The code does not load those ads on other hosts.</li>
-        <li>The game posts short event names (a visit, touch or desktop, ad events, and similar) to <code>/api/event</code>. Cloudflare D1 stores a count per UTC day and key. That table has no player id. The browser stores <code>fl_seen</code> and <code>fl_first</code> so a visitor is counted once a day. This runs only on sheerfall.com.</li>
-        <li>A leaderboard post, as defined in <code>daily.ts</code>, includes a device id, a display name you choose, score, wave, time, class, arena, and, for a daily, the date.</li>
-        <li>Online co-op sends your display name, class, and movement to a Cloudflare Durable Object room, which returns a rejoin token.</li>
-      </ul>
-      <p>We did not open the file that first writes the leaderboard device id into storage, and we did not find a control that deletes a leaderboard row.</p>
+      <p>On sheerfall.com, Google may show an ad after a run. You can choose to watch an ad to reroll a reward. The daily challenge does not offer that.</p>
+      <p>We count how often things happen in the game, such as a visit or an ad view. Those counts are not tied to your name. A leaderboard uses a device id and the name you choose, plus your score. Online play sends your name and what you do in the match, and a token so you can rejoin if you drop.</p>
 
       <h2 id="cyberdeck-runtime">Cyberdeck: Runtime</h2>
-      <p>Reviewed in jonathanblack/cyberdeck-runtime: <code>scripts/managers/SaveManager.cs</code>, <code>web/src/ui/saveslot.ts</code>, and <code>web/src/engine/savecode.ts</code>.</p>
-      <ul>
-        <li>The Godot game writes one JSON file on the device at <code>user://savegame.json</code>, including progress and a saved-at time. New Game deletes that file.</li>
-        <li>The web build keeps a save in <code>localStorage</code>. A demo build uses a separate slot when the main slot holds a full-game save, so the demo does not overwrite it. You can export or import that save as a text code beginning with <code>CDR1.</code></li>
-      </ul>
-      <p>We did not find ads, accounts, analytics, or a crash-reporting SDK in the files we opened. We did not copy the exact <code>localStorage</code> key string out of the web <code>main.ts</code>.</p>
+      <p>Your progress stays on your device. You can copy a save out as text and paste it back later. There are no ads and no account.</p>
 
       <h2 id="cyberdeck-packet">Cyberdeck: Packet</h2>
-      <p>Reviewed in jonathanblack/cyberdeck-packet, branch <code>master</code>: <code>web/worker/account.ts</code> and <code>web/capacitor.config.ts</code>. The repository's default branch did not contain that account file.</p>
-      <ul>
-        <li>An optional account is a 10-character code, or an email. A 6-digit code is mailed from <code>noreply@cyberdeckpacket.com</code> through Cloudflare Email. The device keeps a random token.</li>
-        <li>Cloudflare D1 stores the email or code key, a hash of the device token, and the save document (up to about 900,000 characters). Sign-out deletes that device's token.</li>
-        <li>The iOS shell is Capacitor, app id <code>com.cyberdeckpacket.game</code>.</li>
-      </ul>
-      <p>We did not find a route that deletes the account, the email, or the cloud save. We did not find an ads SDK or a store billing SDK in <code>web/package.json</code>.</p>
+      <p>You can play with a save on your device. You can also make an account with an email or a short code. We email a sign-in code, and we keep that email or code, the device, and your cloud save. Signing out of one device does not delete the account. The iOS and Android apps use the same account if you sign in.</p>
 
       <h2 id="jurassic-legacy">Jurassic Legacy</h2>
-      <p>Reviewed in jonathanblack/JurassicLegacy: <code>src/save.ts</code>, <code>src/account.ts</code>, <code>src/leaderboard.ts</code>, and <code>worker/account.js</code>.</p>
-      <ul>
-        <li><code>localStorage</code> key <code>jurassic-legacy-save-v1</code> holds the expedition: lineage, traits, research, and similar game state. A daily calibration does not write that save.</li>
-        <li>An optional account uses an email plus a 6-digit code mailed from <code>noreply@jurassiclegacy.com</code>, or a 10-character link code. The device token is kept in <code>jurassic-legacy-account</code>.</li>
-        <li>Cloudflare D1 stores the email, a hash of the link code, a hash of the device token, and the save (up to 2 MB). It also stores hashed email codes and per-IP counters for rate limits. The IP is read from <code>CF-Connecting-IP</code>. Sign-out deletes the device row.</li>
-        <li>The daily leaderboard keeps a random player id, the name you chose, and an unsent result in this browser. It posts the id, name, score, and platform <code>web</code> to <code>/api/daily</code>.</li>
-      </ul>
-      <p>We did not find a route that deletes the account, the email, or a leaderboard row. Lab "purchases" spend in-game DNA, not money. No ads SDK is listed in <code>package.json</code>.</p>
+      <p>Your expedition stays on your device. A daily run does not overwrite it. You can make an account with an email or a short code. We email a sign-in code, and we keep that email or code, the device, and your cloud save. Signing out does not delete the account.</p>
+      <p>The daily leaderboard uses a random id stored on your device and the name you choose, plus your score. Spending in the lab uses the game's own currency, not real money. The game does not show ads.</p>
 
       <h2>Children</h2>
-      <p>We did not find an age gate in the code we reviewed. nullblack does not knowingly collect personal information from children under 13. If you believe a child has sent us personal information, email <a href="mailto:${email}">${email}</a> and ask us to delete it. Faded Maps and Sheerfall show ads. Whether any game is directed at children is not something the code states.</p>
+      <p>These games are not directed at children under 13. We do not knowingly collect personal information from children. If you believe a child has sent us personal information, email <a href="mailto:${email}">${email}</a> and we will delete it.</p>
 
-      <h2>GDPR and CCPA</h2>
-      <p>Where the law gives you the right, you can ask us to tell you what we hold, correct it, delete it, give you a copy, or stop selling or sharing personal information for cross-context advertising. We did not find code that sells personal information. Google may process device data when an ad runs, under Google's own policy. Email <a href="mailto:${email}">${email}</a> with the game and, if you have one, the account email or link code. We do not charge for a request the law says is free, and we do not treat you worse for asking. We may refuse a request the law does not require.</p>
+      <h2>Your rights</h2>
+      <p>Where GDPR, CCPA, or a similar law applies, you can ask what we hold about you, for a copy, to correct it, to delete it, or to stop sale or sharing for advertising. We do not sell personal information. Google may use device data to show ads in Faded Maps and Sheerfall, under Google's own policy. Email <a href="mailto:${email}">${email}</a> with the game and, if you have one, the account email or code. We will not treat you worse for asking.</p>
 
       <h2 id="deletion">Deletion</h2>
-      <p>Clear the site's storage, or uninstall the app, to remove a local save.</p>
-      <p>For a Jurassic Legacy or Cyberdeck: Packet account, email <a href="mailto:${email}">${email}</a> from the address on the account, or include the link code, and ask for deletion. Sign-out only drops that device's token. It does not delete the email or the cloud save. There is no in-game delete button in the code we read. Until there is one, email is the deletion path stores such as Google Play ask for.</p>
-      <p>Sheerfall's daily counters are not tied to a name. A leaderboard row is tied to a device id and a display name. Email us to ask for a row to be removed. We did not find a self-serve delete control.</p>
+      <p>Clear the game's saved data, or uninstall the app, to remove what is only on your device.</p>
+      <p>To delete a Jurassic Legacy or Cyberdeck: Packet account, email <a href="mailto:${email}">${email}</a> from the address on the account, or include the code. Signing out is not deletion. This email is how you ask for deletion on Google Play and elsewhere until a button exists in the game.</p>
+      <p>To remove a Sheerfall leaderboard name, email us with the name and the game. There is no button for that in the game.</p>
 
-      <h2>Third parties</h2>
+      <h2>Who else sees data</h2>
       <ul>
-        <li>Google AdSense and Google AdMob, for ads in Faded Maps and Sheerfall.</li>
-        <li>Apple, for the tracking prompt in the Faded Maps iOS app, and as the platform for the Capacitor iOS shells we saw.</li>
-        <li>Cloudflare, for hosting, D1, email sending, and Sheerfall's multiplayer rooms.</li>
+        <li>Google, for ads in Faded Maps and Sheerfall.</li>
+        <li>Apple and Google, for the iOS and Android apps, including Apple's tracking prompt on iOS.</li>
+        <li>Our host, for the website, saved accounts, leaderboards, email, and Sheerfall's online matches.</li>
       </ul>
-      <p>We did not find Steamworks, Apple Game Center, or Google Play Games in the files we opened.</p>
 
-      <h2>Retention</h2>
-      <p>Local data stays until you clear it. Faded Maps drops old daily sheets and extra cached puzzles as described above. Mailed sign-in codes expire after 15 minutes. We did not find a job that deletes old account rows, leaderboard rows, or Sheerfall's daily counters.</p>
+      <h2>How long we keep it</h2>
+      <p>What is on your device stays until you delete it. Sign-in codes expire after 15 minutes. Account details, cloud saves, and leaderboard entries stay until you ask us to delete them or we no longer need them to run the game.</p>
 
       <h2>Changes</h2>
-      <p>We will change the date at the top of this page when the policy changes. If we have your email because you made an account, and the change is material, we will email that address when we can match it.</p>
+      <p>When this policy changes, we will update the date above. If we have your email and the change matters, we will write to you.</p>
 
       <h2>Contact</h2>
       <p>Jonathan Black, doing business as nullblack. <a href="mailto:${email}">${email}</a>.</p>`;
@@ -98,7 +65,7 @@ function supportBody(site) {
         <h2>${escapeHtml(game.title)}</h2>
         <p><a href="/${escapeHtml(game.slug)}/support/">/${escapeHtml(game.slug)}/support/</a></p>
         <h3>I lost my progress</h3>
-        <p>A full answer is not written yet. Progress that lives only in this browser or on this device is gone if that storage is cleared. An account, where the game has one, may still have a cloud save.</p>
+        <p>A full answer is not written yet. If the game has no account, progress stays on that device and is gone when you clear it. If you signed in, the cloud save may still be there.</p>
         <h3>I want my data deleted</h3>
         <p>Email <a href="mailto:${email}">${email}</a> with the game name and, if you have one, the account email or link code. See <a href="/privacy#deletion">deletion</a>.</p>
       </section>`,

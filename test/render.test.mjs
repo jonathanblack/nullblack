@@ -19,16 +19,21 @@ test("placeholders are recognized and real urls are not", () => {
   assert.equal(isPlaceholder("press@nullblack.com"), false);
 });
 
-test("the published page keeps every game offline until its url is real", () => {
+test("game cards link live games and each game's support and privacy", () => {
   const html = renderIndex(site);
   assert.equal(site.games.length, 5);
+  assert.match(html, /href="https:\/\/fadedmaps\.com\/"/);
+  assert.match(html, /href="https:\/\/sheerfall\.com\/"/);
+  assert.match(html, /href="https:\/\/jurassiclegacy\.com\/"/);
+  assert.match(html, /href="https:\/\/cyberdeckruntime\.com\/"/);
+  assert.doesNotMatch(html, /cyberdeckpacket\.com/);
   for (const game of site.games) {
-    assert.equal(game.url, "TODO");
     assert.match(html, new RegExp(`<article class="card" id="${game.id}">`));
-    assert.match(html, new RegExp(game.title));
+    assert.match(html, new RegExp(`href="/${game.slug}/support/"`));
+    assert.match(html, new RegExp(`href="/${game.slug}/privacy/"`));
     assert.match(html, new RegExp(game.status.replace(/[.]/g, "\\.")));
-    assert.doesNotMatch(html, new RegExp(`id="${game.id}" href=`));
   }
+  assert.match(html, /iOS, Android/);
   assert.match(html, /href="mailto:hello@nullblack\.com"/);
   assert.doesNotMatch(html, /class="pending">TODO</);
   assert.match(html, /© 2026 nullblack/);
@@ -111,12 +116,8 @@ test("hub pages name the studio, the games, and the footer", async () => {
   const privacy = pages.find((page) => page.path === "/privacy/").html;
   assert.match(privacy, /Jonathan Black, doing business as nullblack/);
   assert.match(privacy, /hello@nullblack\.com/);
-  assert.match(privacy, /ca-pub-1117832063249065/);
-  assert.match(privacy, /AdMob/);
-  assert.match(privacy, /user:\/\/savegame\.json/);
-  assert.match(privacy, /noreply@jurassiclegacy\.com/);
-  assert.match(privacy, /noreply@cyberdeckpacket\.com/);
-  assert.match(privacy, /We did not find Steamworks/);
+  assert.match(privacy, /iOS and Android/);
+  assert.doesNotMatch(privacy, /github\.com|localStorage|TestFlight|repository|D1|Capacitor/i);
   assert.doesNotMatch(privacy.replaceAll("©", ""), /\p{Extended_Pictographic}/u);
   const support = pages.find((page) => page.path === "/support/").html;
   assert.match(support, /Expected response time: TODO/);

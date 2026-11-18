@@ -48,18 +48,17 @@ export const site = {
       slug: "cyberdeck-runtime",
       title: "Cyberdeck: Runtime",
       description: "An incremental cyberpunk hacking game.",
-      status: "Coming to Steam Early Access, iOS, and web.",
-      // TODO: Steam, iOS, or web URL.
-      url: "TODO",
+      status: "Coming to Steam Early Access, iOS, Android, and web.",
+      url: "https://cyberdeckruntime.com/",
     },
     {
       id: "cyberdeck-packet",
       slug: "cyberdeck-packet",
       title: "Cyberdeck: Packet",
-      description: "A turn-based roguelike. Arrange a rig, then fight ICE.",
+      description: "Arrange a rig, then fight.",
       // TODO: confirm the public platform line.
-      status: "Coming to web, iOS, and Steam.",
-      // TODO: web, iOS, or Steam URL.
+      status: "Coming to web, iOS, Android, and Steam.",
+      // TODO: playable web, iOS, Android, or Steam URL. cyberdeckpacket.com is not a live game.
       url: "TODO",
     },
     {
@@ -68,26 +67,23 @@ export const site = {
       title: "Jurassic Legacy",
       description: "A dinosaur lineage runner.",
       status: "Coming to iOS, Android, and Steam.",
-      // TODO: iOS, Android, or Steam URL.
-      url: "TODO",
+      url: "https://jurassiclegacy.com/",
     },
     {
       id: "sheerfall",
       slug: "sheerfall",
       title: "Sheerfall",
-      description: "A 3D co-op roguelike with eight classes and up to four players.",
+      description: "A co-op roguelike for up to four players.",
       status: "Coming to web, then Steam.",
-      // TODO: web or Steam URL.
-      url: "TODO",
+      url: "https://sheerfall.com/",
     },
     {
       id: "faded-maps",
       slug: "fadedmaps",
       title: "Faded Maps",
-      description: "A daily map-deduction puzzle.",
+      description: "A daily map puzzle.",
       status: "Play on the web.",
-      // TODO: web game URL.
-      url: "TODO",
+      url: "https://fadedmaps.com/",
     },
   ],
 };
