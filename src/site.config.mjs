@@ -8,8 +8,6 @@
  * Social URLs are the public profiles for @nullblackgames.
  *
  * Still unpublished, and not printed on the site:
- * - games[cyberdeck-packet].url (cyberdeckpacket.com is not a live game)
- * - games[cyberdeck-packet].status if the public platform line should differ
  * - Steam store URLs
  * - social bluesky: confirm the profile. The URL below assumes
  *   nullblackgames.bsky.social. Replace it if the handle is a custom domain.
@@ -51,10 +49,8 @@ export const site = {
       slug: "cyberdeck-packet",
       title: "Cyberdeck: Packet",
       description: "Arrange a rig, then fight.",
-      // TODO: confirm the public platform line.
       status: "Coming to web, iOS, Android, and Steam.",
-      // TODO: playable web, iOS, Android, or Steam URL. cyberdeckpacket.com is not a live game.
-      url: "TODO",
+      url: "https://cyberdeckpacket.com/",
     },
     {
       id: "jurassic-legacy",
