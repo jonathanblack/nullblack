@@ -28,7 +28,6 @@ If this repo is instead a Pages project, set the build command to `npm run build
 
 Unpublished values stay in `src/site.config.mjs` as `TODO` and are left off the page. The site does not print that word.
 
-- Cyberdeck: Packet play URL, and the platform line if it should not read "Coming to web, iOS, Android, and Steam."
 - Steam store URLs
 - Bluesky profile, if it is not `nullblackgames.bsky.social`
 

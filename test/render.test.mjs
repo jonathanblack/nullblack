@@ -26,7 +26,7 @@ test("game cards link live games and each game's support and privacy", () => {
   assert.match(html, /href="https:\/\/sheerfall\.com\/"/);
   assert.match(html, /href="https:\/\/jurassiclegacy\.com\/"/);
   assert.match(html, /href="https:\/\/cyberdeckruntime\.com\/"/);
-  assert.doesNotMatch(html, /cyberdeckpacket\.com/);
+  assert.match(html, /href="https:\/\/cyberdeckpacket\.com\/"/);
   for (const game of site.games) {
     assert.match(html, new RegExp(`<article class="card" id="${game.id}">`));
     assert.match(html, new RegExp(`href="/${game.slug}/support/"`));
