@@ -41,17 +41,24 @@ function renderPress(email) {
 }
 
 function renderGame(game, index) {
-  const inner = `
+  const title = escapeHtml(game.title);
+  const slug = escapeHtml(game.slug);
+  const heading = isPlaceholder(game.url)
+    ? title
+    : `<a href="${escapeHtml(game.url)}">${title}</a>`;
+  const play = isPlaceholder(game.url)
+    ? ""
+    : `<a href="${escapeHtml(game.url)}">play</a>`;
+  return `<li><article class="card" id="${escapeHtml(game.id)}">
         <p class="kicker">${String(index + 1).padStart(2, "0")}</p>
-        <h3>${escapeHtml(game.title)}</h3>
+        <h3>${heading}</h3>
         <p class="desc">${escapeHtml(game.description)}</p>
-        <p class="status">${escapeHtml(game.status)}</p>`;
-  if (isPlaceholder(game.url)) {
-    return `<li><article class="card" id="${escapeHtml(game.id)}">${inner}
+        <p class="status">${escapeHtml(game.status)}</p>
+        <p class="card-links">${play}
+          <a href="/${slug}/support/">support</a>
+          <a href="/${slug}/privacy/">privacy</a>
+        </p>
       </article></li>`;
-  }
-  return `<li><a class="card" id="${escapeHtml(game.id)}" href="${escapeHtml(game.url)}">${inner}
-      </a></li>`;
 }
 
 function organizationJsonLd(site) {
