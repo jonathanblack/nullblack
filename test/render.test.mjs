@@ -117,6 +117,8 @@ test("hub pages name the studio, the games, and the footer", async () => {
   assert.match(privacy, /Jonathan Black, doing business as nullblack/);
   assert.match(privacy, /hello@nullblack\.com/);
   assert.match(privacy, /iOS and Android/);
+  assert.match(privacy, /network address/);
+  assert.doesNotMatch(privacy, /not directed at children/);
   assert.doesNotMatch(privacy, /github\.com|localStorage|TestFlight|repository|D1|Capacitor/i);
   assert.doesNotMatch(privacy.replaceAll("©", ""), /\p{Extended_Pictographic}/u);
   const support = pages.find((page) => page.path === "/support/").html;

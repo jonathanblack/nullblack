@@ -25,11 +25,11 @@ function privacyBody(site) {
       <p>You can play with a save on your device. You can also make an account with an email or a short code. We email a sign-in code, and we keep that email or code, the device, and your cloud save. Signing out of one device does not delete the account. The iOS and Android apps use the same account if you sign in.</p>
 
       <h2 id="jurassic-legacy">Jurassic Legacy</h2>
-      <p>Your expedition stays on your device. A daily run does not overwrite it. You can make an account with an email or a short code. We email a sign-in code, and we keep that email or code, the device, and your cloud save. Signing out does not delete the account.</p>
+      <p>Your expedition stays on your device. A daily run does not overwrite it. You can make an account with an email or a short code. We email a sign-in code, and we keep that email or code, the device, and your cloud save. When you ask for a code, we also count attempts from your network address so we can slow down repeated tries. That count is not part of your account. Signing out does not delete the account.</p>
       <p>The daily leaderboard uses a random id stored on your device and the name you choose, plus your score. Spending in the lab uses the game's own currency, not real money. The game does not show ads.</p>
 
       <h2>Children</h2>
-      <p>These games are not directed at children under 13. We do not knowingly collect personal information from children. If you believe a child has sent us personal information, email <a href="mailto:${email}">${email}</a> and we will delete it.</p>
+      <p>We do not knowingly collect personal information from children under 13. If you believe a child has sent us personal information, email <a href="mailto:${email}">${email}</a> and we will delete it. Faded Maps and Sheerfall show ads.</p>
 
       <h2>Your rights</h2>
       <p>Where GDPR, CCPA, or a similar law applies, you can ask what we hold about you, for a copy, to correct it, to delete it, or to stop sale or sharing for advertising. We do not sell personal information. Google may use device data to show ads in Faded Maps and Sheerfall, under Google's own policy. Email <a href="mailto:${email}">${email}</a> with the game and, if you have one, the account email or code. We will not treat you worse for asking.</p>
@@ -43,11 +43,11 @@ function privacyBody(site) {
       <ul>
         <li>Google, for ads in Faded Maps and Sheerfall.</li>
         <li>Apple and Google, for the iOS and Android apps, including Apple's tracking prompt on iOS.</li>
-        <li>Our host, for the website, saved accounts, leaderboards, email, and Sheerfall's online matches.</li>
+        <li>Our host, for the website, saved accounts, sign-in attempt counts by network address, leaderboards, email, and Sheerfall's online matches.</li>
       </ul>
 
       <h2>How long we keep it</h2>
-      <p>What is on your device stays until you delete it. Sign-in codes expire after 15 minutes. Account details, cloud saves, and leaderboard entries stay until you ask us to delete them or we no longer need them to run the game.</p>
+      <p>What is on your device stays until you delete it. Sign-in codes expire after 15 minutes. Account details, cloud saves, sign-in attempt counts, and leaderboard entries stay until you ask us to delete them or we no longer need them to run the game.</p>
 
       <h2>Changes</h2>
       <p>When this policy changes, we will update the date above. If we have your email and the change matters, we will write to you.</p>
