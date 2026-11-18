@@ -3,6 +3,7 @@
   "name": "nullblack",
   "main": "worker/index.js",
   "compatibility_date": "2026-11-18",
+  "workers_dev": false,
   "preview_urls": true,
   "assets": {
     "directory": "./public",
