@@ -35,9 +35,10 @@ function privacyBody(site) {
       <p>Where GDPR, CCPA, or a similar law applies, you can ask what we hold about you, for a copy, to correct it, to delete it, or to stop sale or sharing for advertising. We do not sell personal information. Google may use device data to show ads in Faded Maps and Sheerfall, under Google's own policy. Email <a href="mailto:${email}">${email}</a> with the game and, if you have one, the account email or code. We will not treat you worse for asking.</p>
 
       <h2 id="deletion">Deletion</h2>
+      <p>Data deletion requests go by email to <a href="mailto:${email}">${email}</a>.</p>
       <p>Clear the game's saved data, or uninstall the app, to remove what is only on your device.</p>
-      <p>To delete a Jurassic Legacy or Cyberdeck: Packet account, email <a href="mailto:${email}">${email}</a> from the address on the account, or include the code. Signing out is not deletion. This email is how you ask for deletion on Google Play and elsewhere until a button exists in the game.</p>
-      <p>To remove a Sheerfall leaderboard name, email us with the name and the game. There is no button for that in the game.</p>
+      <p>To delete a Jurassic Legacy or Cyberdeck: Packet account, email <a href="mailto:${email}">${email}</a> from the address on the account, or include the code. Signing out is not deletion.</p>
+      <p>To remove a Sheerfall leaderboard name, email <a href="mailto:${email}">${email}</a> with the name and the game.</p>
 
       <h2>Who else sees data</h2>
       <ul>
@@ -74,7 +75,7 @@ function supportBody(site) {
   return `<h1>support</h1>
       <p>Email <a href="mailto:${email}">${email}</a>. Expected response time: ${reply}.</p>
       <h2>Deletion requests</h2>
-      <p>Email that address and name the game. For Jurassic Legacy or Cyberdeck: Packet, include the account email or the link code. Sign-out does not delete the server copy. Details are in the <a href="/privacy/#deletion">privacy policy</a>.</p>
+      <p>Data deletion requests go by email to <a href="mailto:${email}">${email}</a>. Name the game. For Jurassic Legacy or Cyberdeck: Packet, include the account email or the link code. Sign-out does not delete the server copy. Details are in the <a href="/privacy/#deletion">privacy policy</a>.</p>
       ${games}`;
 }
 
@@ -92,7 +93,7 @@ function termsBody(site) {
       <h2>No warranty</h2>
       <p>The games and the site are provided as they are. They may break, change, or go offline. To the extent the law allows, we are not liable for lost progress or for indirect damages.</p>
       <h2>Law</h2>
-      <p>A governing law and a court are not chosen yet. Expected response for legal notices: ${escapeHtml(site.supportResponseTime)}. Send them to <a href="mailto:${email}">${email}</a>.</p>
+      <p>These terms are governed by the laws of Florida, USA. Send legal notices to <a href="mailto:${email}">${email}</a>.</p>
       <h2>Changes</h2>
       <p>We may change these terms by posting a new version on this page. If you keep playing after that, the new terms apply to the new use.</p>`;
 }
@@ -119,6 +120,7 @@ function gamePrivacyBody(site, game) {
   return `<h1>${title}</h1>
       <p class="meta">Privacy address for store listings.</p>
       <p>The studio policy is one document. The ${title} section is here: <a href="/privacy/#${slug}">/privacy/#${slug}</a>.</p>
+      <p>Data deletion requests go by email to <a href="mailto:${escapeHtml(site.pressEmail)}">${escapeHtml(site.pressEmail)}</a>.</p>
       <p><a href="/privacy/">Full privacy policy</a>. <a href="/${slug}/support/">Support for ${title}</a>.</p>`;
 }
 
@@ -127,7 +129,7 @@ function gameSupportBody(site, game) {
   const title = escapeHtml(game.title);
   return `<h1>${title}</h1>
       <p class="meta">Support address for store listings.</p>
-      <p>Write to <a href="mailto:${escapeHtml(site.pressEmail)}">${escapeHtml(site.pressEmail)}</a>. The ${title} questions are here: <a href="/support/#${slug}">/support/#${slug}</a>.</p>
+      <p>Write to <a href="mailto:${escapeHtml(site.pressEmail)}">${escapeHtml(site.pressEmail)}</a>. Data deletion requests go to that address. We reply ${escapeHtml(site.supportResponseTime)}. The ${title} questions are here: <a href="/support/#${slug}">/support/#${slug}</a>.</p>
       <p><a href="/support/">All support</a>. <a href="/${slug}/privacy/">Privacy for ${title}</a>.</p>`;
 }
 

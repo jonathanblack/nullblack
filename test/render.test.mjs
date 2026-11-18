@@ -122,8 +122,20 @@ test("hub pages name the studio, the games, and the footer", async () => {
   assert.doesNotMatch(privacy, /github\.com|localStorage|TestFlight|repository|D1|Capacitor/i);
   assert.doesNotMatch(privacy.replaceAll("©", ""), /\p{Extended_Pictographic}/u);
   const support = pages.find((page) => page.path === "/support/").html;
-  assert.match(support, /Expected response time: TODO/);
+  const terms = pages.find((page) => page.path === "/terms/").html;
+  assert.match(support, /Expected response time: within 2 business days/);
+  assert.match(support, /Data deletion requests go by email to/);
   assert.match(support, /href="\/privacy\/#deletion"/);
+  assert.match(terms, /governed by the laws of Florida, USA/);
+  assert.match(privacy, /do not knowingly collect personal information from children under 13/);
+  for (const page of pages) {
+    assert.doesNotMatch(page.html, /\bTODO\b/);
+    if (page.path.endsWith("/privacy/") || page.path.endsWith("/support/")) {
+      assert.match(page.html, /hello@nullblack\.com/);
+      assert.match(page.html, /[Dd]ata deletion/);
+    }
+  }
+  assert.doesNotMatch(renderIndex(site), /\bTODO\b/);
   const home = renderIndex(site);
   assert.match(home, /href="\/privacy\/"/);
   assert.match(home, /href="\/support\/"/);

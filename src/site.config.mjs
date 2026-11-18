@@ -7,14 +7,10 @@
  *
  * Social URLs are the public profiles for @nullblackgames.
  *
- * TODOs for the owner:
- * - games[cyberdeck].url
- * - games[cyberdeck-packet].url
+ * Still unpublished, and not printed on the site:
+ * - games[cyberdeck-packet].url (cyberdeckpacket.com is not a live game)
  * - games[cyberdeck-packet].status if the public platform line should differ
- * - games[jurassic-legacy].url
- * - games[sheerfall].url
- * - games[faded-maps].url
- * - supportResponseTime
+ * - Steam store URLs
  * - social bluesky: confirm the profile. The URL below assumes
  *   nullblackgames.bsky.social. Replace it if the handle is a custom domain.
  */
@@ -28,8 +24,7 @@ export const site = {
   year: 2026,
   pressEmail: "hello@nullblack.com",
   effectiveDate: "November 18, 2026",
-  // TODO: replace with a real reply window, for example "within 30 days".
-  supportResponseTime: "TODO",
+  supportResponseTime: "within 2 business days",
   social: [
     { id: "x", label: "x", url: "https://x.com/nullblackgames" },
     { id: "tiktok", label: "tiktok", url: "https://www.tiktok.com/@nullblackgames" },

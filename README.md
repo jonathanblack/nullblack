@@ -26,13 +26,10 @@ If this repo is instead a Pages project, set the build command to `npm run build
 
 ## Links still to fill in
 
-Every unpublished target in `src/site.config.mjs` is the string `TODO`. The page shows that text and does not link it.
+Unpublished values stay in `src/site.config.mjs` as `TODO` and are left off the page. The site does not print that word.
 
-- Cyberdeck: Runtime url
-- Cyberdeck: Packet url, and the platform line if it should not read "Coming to web, iOS, and Steam."
-- Jurassic Legacy url
-- Sheerfall url
-- Faded Maps url
+- Cyberdeck: Packet play URL, and the platform line if it should not read "Coming to web, iOS, Android, and Steam."
+- Steam store URLs
 - Bluesky profile, if it is not `nullblackgames.bsky.social`
 
 Press and contact is `hello@nullblack.com`. Social links for X, TikTok, YouTube, Twitch, Instagram, and Bluesky use `@nullblackgames`.
