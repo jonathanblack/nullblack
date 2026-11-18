@@ -1,7 +1,6 @@
 import { cp, mkdir, readFile, rm, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import sharp from "sharp";
 import { site } from "../src/site.config.mjs";
 import { renderIndex, renderNotFound } from "./render.mjs";
 
@@ -9,31 +8,21 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const pub = path.join(root, "public");
 const brand = path.join(root, "assets", "brand");
 
-async function writeOgImage() {
-  const source = path.join(brand, "lockup-horizontal-light-on-dark.png");
-  const targetWidth = 980;
-  const resized = await sharp(source)
-    .resize({ width: targetWidth, withoutEnlargement: false })
-    .png()
-    .toBuffer();
-  const resizedMeta = await sharp(resized).metadata();
-  const top = Math.round((630 - resizedMeta.height) / 2);
+function pngSize(buffer) {
+  const signature = buffer.subarray(0, 8).toString("hex");
+  if (signature !== "89504e470d0a1a0a") {
+    throw new Error("og.png is not a PNG");
+  }
+  return { width: buffer.readUInt32BE(16), height: buffer.readUInt32BE(20) };
+}
 
-  await sharp({
-    create: {
-      width: 1200,
-      height: 630,
-      channels: 3,
-      background: "#000000",
-    },
-  })
-    .composite([{ input: resized, top, left: Math.round((1200 - targetWidth) / 2) }])
-    .png()
-    .toFile(path.join(pub, "og.png"));
-
-  const og = await sharp(path.join(pub, "og.png")).metadata();
-  if (og.width !== 1200 || og.height !== 630) {
-    throw new Error(`og.png is ${og.width}x${og.height}, expected 1200x630`);
+async function copyOgImage() {
+  const source = path.join(root, "assets", "og.png");
+  const target = path.join(pub, "og.png");
+  await cp(source, target);
+  const size = pngSize(await readFile(target));
+  if (size.width !== 1200 || size.height !== 630) {
+    throw new Error(`og.png is ${size.width}x${size.height}, expected 1200x630`);
   }
 }
 
@@ -77,6 +66,6 @@ await cp(path.join(brand, "favicon.ico"), path.join(pub, "favicon.ico"));
 await cp(path.join(brand, "favicon-16.png"), path.join(pub, "favicon-16.png"));
 await cp(path.join(brand, "favicon-32.png"), path.join(pub, "favicon-32.png"));
 await cp(path.join(brand, "icon-512.png"), path.join(pub, "apple-touch-icon.png"));
-await writeOgImage();
+await copyOgImage();
 
 console.log("built public/");

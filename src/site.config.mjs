@@ -14,7 +14,6 @@
  * - games[jurassic-legacy].url
  * - games[sheerfall].url
  * - games[faded-maps].url
- * - pressEmail
  * - social bluesky: confirm the profile. The URL below assumes
  *   nullblackgames.bsky.social. Replace it if the handle is a custom domain.
  */
@@ -26,12 +25,12 @@ export const site = {
   lede: "The studio of Jonathan Black.",
   description: "small games, made late at night. The studio of Jonathan Black.",
   year: 2026,
-  // TODO: press and contact email.
-  pressEmail: "TODO",
+  pressEmail: "hello@nullblack.com",
   social: [
     { id: "x", label: "x", url: "https://x.com/nullblackgames" },
     { id: "tiktok", label: "tiktok", url: "https://www.tiktok.com/@nullblackgames" },
     { id: "youtube", label: "youtube", url: "https://www.youtube.com/@nullblackgames" },
+    { id: "twitch", label: "twitch", url: "https://www.twitch.tv/nullblackgames" },
     { id: "instagram", label: "instagram", url: "https://www.instagram.com/nullblackgames" },
     {
       id: "bluesky",

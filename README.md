@@ -18,7 +18,7 @@ npm run preview
 
 The repo had no Wrangler, Pages, or workflow config. Both domains currently answer with the Worker placeholder `Hello world` (`text/plain`). This project serves `public/` from that Worker. `worker/index.js` hands every request to the asset binding, including the 404 page.
 
-Workers Builds can keep an empty build command. Deploy command: `npx wrangler deploy`. Wrangler is pinned in `package.json`. `public/` is already built, so the first deploy does not need a build step.
+The dashboard build command is `npm run build`. That script regenerates `public/` with Node built-ins only, so it does not need `devDependencies`. Deploy command stays `npx wrangler deploy`. `main` has no `package.json` until this branch is merged, so a production build of `main` still fails with `ENOENT` for `package.json`.
 
 `wrangler.jsonc` does not list routes or custom domains. Those stay where they are in the dashboard. The Worker name is `nullblack`. If the connected Worker uses another name, change `name` to match before deploying. A mismatch fails the build instead of moving the domains.
 
@@ -33,9 +33,8 @@ Every unpublished target in `src/site.config.mjs` is the string `TODO`. The page
 - Jurassic Legacy url
 - Sheerfall url
 - Faded Maps url
-- Press and contact email
 - Bluesky profile, if it is not `nullblackgames.bsky.social`
 
-Social links for X, TikTok, YouTube, Instagram, and Bluesky use `@nullblackgames`.
+Press and contact is `hello@nullblack.com`. Social links for X, TikTok, YouTube, Twitch, Instagram, and Bluesky use `@nullblackgames`.
 
 The wordmark is set in IBM Plex Mono, shipped as Latin woff2 files under `src/fonts/` with the SIL Open Font License.

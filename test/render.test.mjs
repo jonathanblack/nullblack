@@ -3,7 +3,6 @@ import { readFile } from "node:fs/promises";
 import path from "node:path";
 import test from "node:test";
 import { fileURLToPath } from "node:url";
-import sharp from "sharp";
 import { isPlaceholder, site } from "../src/site.config.mjs";
 import { renderIndex, renderNotFound } from "../scripts/render.mjs";
 
@@ -30,8 +29,8 @@ test("the published page keeps every game offline until its url is real", () => 
     assert.match(html, new RegExp(game.status.replace(/[.]/g, "\\.")));
     assert.doesNotMatch(html, new RegExp(`id="${game.id}" href=`));
   }
-  assert.match(html, /class="pending">TODO</);
-  assert.doesNotMatch(html, /mailto:/);
+  assert.match(html, /href="mailto:hello@nullblack\.com"/);
+  assert.doesNotMatch(html, /class="pending">TODO</);
   assert.match(html, /© 2026 nullblack/);
   assert.match(html, /small games, made late at night\./);
   assert.doesNotMatch(html.replaceAll("©", ""), emoji);
@@ -95,7 +94,8 @@ test("404 page names nullblack and links home", () => {
 });
 
 test("built og image is 1200 by 630", async () => {
-  const meta = await sharp(path.join(root, "public", "og.png")).metadata();
-  assert.equal(meta.width, 1200);
-  assert.equal(meta.height, 630);
+  const buffer = await readFile(path.join(root, "public", "og.png"));
+  assert.equal(buffer.subarray(0, 8).toString("hex"), "89504e470d0a1a0a");
+  assert.equal(buffer.readUInt32BE(16), 1200);
+  assert.equal(buffer.readUInt32BE(20), 630);
 });
