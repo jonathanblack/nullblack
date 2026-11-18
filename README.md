@@ -16,7 +16,7 @@ npm run preview
 
 ## Deploy
 
-The repo had no Wrangler, Pages, or workflow config. Both domains currently answer with the Worker placeholder `Hello world` (`text/plain`). This project is an assets-only Worker, the same static-asset shape used for other Cloudflare sites, without a script of its own.
+The repo had no Wrangler, Pages, or workflow config. Both domains currently answer with the Worker placeholder `Hello world` (`text/plain`). This project serves `public/` from that Worker. `worker/index.js` hands every request to the asset binding, including the 404 page.
 
 Workers Builds can keep an empty build command. Deploy command: `npx wrangler deploy`. Wrangler is pinned in `package.json`. `public/` is already built, so the first deploy does not need a build step.
 
