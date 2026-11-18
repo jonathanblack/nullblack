@@ -1,0 +1,19 @@
+{
+  "name": "nullblack",
+  "private": true,
+  "type": "module",
+  "description": "nullblack studio site. Static files in public/, served by a Cloudflare Worker.",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "test": "node scripts/build.mjs && node --test",
+    "preview": "wrangler dev",
+    "deploy": "npm run build && wrangler deploy"
+  },
+  "devDependencies": {
+    "sharp": "^0.35.5",
+    "wrangler": "^4.164.0"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}
