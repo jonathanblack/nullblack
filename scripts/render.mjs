@@ -78,9 +78,12 @@ function organizationJsonLd(site) {
   return JSON.stringify(data).replace(/</g, "\\u003c");
 }
 
-function head(site, { title, description, path = "/" }) {
+function head(site, { title, description, path = "/", image: pageImage = null }) {
   const canonical = new URL(path, site.url).href;
-  const image = new URL("/og.png", site.url).href;
+  const og = pageImage ?? { path: "/og.png", width: 1200, height: 630, alt: "nullblack" };
+  const image = new URL(og.path, site.url).href;
+  const shareTitle = pageImage ? title : site.name;
+  const shareDescription = pageImage ? description : site.description;
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -101,19 +104,19 @@ function head(site, { title, description, path = "/" }) {
   <link rel="stylesheet" href="/styles.css">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="${escapeHtml(site.name)}">
-  <meta property="og:title" content="${escapeHtml(site.name)}">
-  <meta property="og:description" content="${escapeHtml(site.description)}">
+  <meta property="og:title" content="${escapeHtml(shareTitle)}">
+  <meta property="og:description" content="${escapeHtml(shareDescription)}">
   <meta property="og:url" content="${escapeHtml(canonical)}">
   <meta property="og:image" content="${escapeHtml(image)}">
-  <meta property="og:image:width" content="1200">
-  <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="nullblack">
+  <meta property="og:image:width" content="${escapeHtml(og.width)}">
+  <meta property="og:image:height" content="${escapeHtml(og.height)}">
+  <meta property="og:image:alt" content="${escapeHtml(og.alt)}">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:site" content="@nullblackgames">
-  <meta name="twitter:title" content="${escapeHtml(site.name)}">
-  <meta name="twitter:description" content="${escapeHtml(site.description)}">
+  <meta name="twitter:title" content="${escapeHtml(shareTitle)}">
+  <meta name="twitter:description" content="${escapeHtml(shareDescription)}">
   <meta name="twitter:image" content="${escapeHtml(image)}">
-  <meta name="twitter:image:alt" content="nullblack">
+  <meta name="twitter:image:alt" content="${escapeHtml(og.alt)}">
   <script type="application/ld+json">${organizationJsonLd(site)}</script>
 </head>`;
 }
@@ -153,11 +156,11 @@ function footer(site, path = "/") {
   </footer>`;
 }
 
-export function renderPage(site, { title, description, path, body }) {
-  return `${head(site, { title: `${title} — ${site.name}`, description, path })}
+export function renderPage(site, { title, description, path, body, image = null, wide = false }) {
+  return `${head(site, { title: `${title} — ${site.name}`, description, path, image })}
 <body>
   ${header()}
-  <main id="content" class="doc">
+  <main id="content" class="doc${wide ? " wide" : ""}">
     <div class="shell">
       ${body}
     </div>

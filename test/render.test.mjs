@@ -95,7 +95,9 @@ test("reduced motion keeps the cursor visible and still", async () => {
 
 test("hub pages name the studio, the games, and the footer", async () => {
   const { hubPages } = await import("../src/hub.mjs");
-  const pages = hubPages(site);
+  const { pressPages } = await import("../src/press.mjs");
+  const { readPress, pressAssetTable } = await import("../scripts/press.mjs");
+  const pages = [...hubPages(site), ...pressPages(site, pressAssetTable(await readPress(root, site)))];
   const paths = pages.map((page) => page.path);
   for (const path of [
     "/privacy/",
@@ -157,4 +159,68 @@ test("built og image is 1200 by 630", async () => {
   assert.equal(buffer.subarray(0, 8).toString("hex"), "89504e470d0a1a0a");
   assert.equal(buffer.readUInt32BE(16), 1200);
   assert.equal(buffer.readUInt32BE(20), 630);
+});
+
+test("press has a studio page and a kit for every game", async () => {
+  const { pressPages, pressKits, kitFiles, kitThumbs, zipName } = await import("../src/press.mjs");
+  const { readPress, pressAssetTable } = await import("../scripts/press.mjs");
+  const pages = pressPages(site, pressAssetTable(await readPress(root, site)));
+  const studio = pages.find((page) => page.path === "/press/").html;
+  assert.match(studio, /Jonathan Black/);
+  assert.match(studio, /href="mailto:hello@nullblack\.com"/);
+  assert.match(studio, /href="\/assets\/brand\/lockup-horizontal-light-on-dark\.svg" download/);
+  assert.match(studio, /href="\/assets\/brand\/icon-cursor-dark-1024\.png" download/);
+  assert.match(studio, /href="https:\/\/sheerfall\.com\/press\/"/);
+  for (const item of site.social) {
+    assert.match(studio, new RegExp(`href="${item.url.replace(/[.]/g, "\\.")}"`));
+  }
+  for (const game of site.games) {
+    assert.ok(pressKits[game.slug], game.slug);
+    assert.match(studio, new RegExp(`href="/press/${game.slug}/"`));
+    const page = pages.find((p) => p.path === `/press/${game.slug}/`);
+    assert.ok(page, game.slug);
+    const html = page.html;
+    const kit = pressKits[game.slug];
+    assert.match(html, new RegExp(`href="/press/${game.slug}/${zipName(game.slug)}" download`));
+    assert.match(html, /<dt>developer<\/dt><dd>Jonathan Black<\/dd>/);
+    assert.match(html, /href="mailto:hello@nullblack\.com"/);
+    assert.match(html, new RegExp(`href="${game.url.replace(/[.]/g, "\\.")}"`));
+    assert.match(html, /property="og:image" content="https:\/\/nullblack\.com\/press\//);
+    assert.ok(kit.shots.length >= 6 && kit.shots.length <= 8, `${game.slug}: ${kit.shots.length} screenshots`);
+    for (const file of [...kitFiles(kit), ...kitThumbs(kit)]) {
+      assert.match(html, new RegExp(`/press/${game.slug}/assets/${file.replace(/[.]/g, "\\.")}`));
+      const built = await readFile(path.join(root, "public", "press", game.slug, "assets", file));
+      assert.equal(built.subarray(0, 8).toString("hex"), "89504e470d0a1a0a", file);
+    }
+    assert.doesNotMatch(html, /\bTODO\b/);
+    assert.doesNotMatch(html.replaceAll("©", ""), emoji);
+  }
+});
+
+test("each kit's zip holds its fact sheet and every file it names", async () => {
+  const { pressKits, kitFiles, zipName } = await import("../src/press.mjs");
+  for (const game of site.games) {
+    const zip = await readFile(path.join(root, "public", "press", game.slug, zipName(game.slug)));
+    const end = zip.length - 22;
+    assert.equal(zip.readUInt32LE(end), 0x06054b50, game.slug);
+    const count = zip.readUInt16LE(end + 10);
+    let at = zip.readUInt32LE(end + 16);
+    const names = [];
+    for (let i = 0; i < count; i++) {
+      assert.equal(zip.readUInt32LE(at), 0x02014b50);
+      const length = zip.readUInt16LE(at + 28);
+      names.push(zip.subarray(at + 46, at + 46 + length).toString("utf8"));
+      at += 46 + length + zip.readUInt16LE(at + 30) + zip.readUInt16LE(at + 32);
+    }
+    const folder = `${game.slug}-press-kit/`;
+    assert.deepEqual(names, [`${folder}fact-sheet.txt`, ...kitFiles(pressKits[game.slug]).map((file) => folder + file)]);
+  }
+});
+
+test("the sitemap lists every press page", async () => {
+  const xml = await readFile(path.join(root, "public", "sitemap.xml"), "utf8");
+  assert.match(xml, /<loc>https:\/\/nullblack\.com\/press\/<\/loc>/);
+  for (const game of site.games) {
+    assert.match(xml, new RegExp(`<loc>https://nullblack\\.com/press/${game.slug}/</loc>`));
+  }
 });

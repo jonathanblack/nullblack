@@ -4,7 +4,6 @@
   <url><loc>https://nullblack.com/privacy/</loc></url>
   <url><loc>https://nullblack.com/support/</loc></url>
   <url><loc>https://nullblack.com/terms/</loc></url>
-  <url><loc>https://nullblack.com/press/</loc></url>
   <url><loc>https://nullblack.com/cyberdeck-runtime/privacy/</loc></url>
   <url><loc>https://nullblack.com/cyberdeck-runtime/support/</loc></url>
   <url><loc>https://nullblack.com/cyberdeck-packet/privacy/</loc></url>
@@ -15,4 +14,10 @@
   <url><loc>https://nullblack.com/sheerfall/support/</loc></url>
   <url><loc>https://nullblack.com/fadedmaps/privacy/</loc></url>
   <url><loc>https://nullblack.com/fadedmaps/support/</loc></url>
+  <url><loc>https://nullblack.com/press/</loc></url>
+  <url><loc>https://nullblack.com/press/cyberdeck-runtime/</loc></url>
+  <url><loc>https://nullblack.com/press/cyberdeck-packet/</loc></url>
+  <url><loc>https://nullblack.com/press/jurassic-legacy/</loc></url>
+  <url><loc>https://nullblack.com/press/sheerfall/</loc></url>
+  <url><loc>https://nullblack.com/press/fadedmaps/</loc></url>
 </urlset>

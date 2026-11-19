@@ -98,22 +98,6 @@ function termsBody(site) {
       <p>We may change these terms by posting a new version on this page. If you keep playing after that, the new terms apply to the new use.</p>`;
 }
 
-function pressBody(site) {
-  const email = escapeHtml(site.pressEmail);
-  return `<h1>press</h1>
-      <p>A short page for logos and contact. A longer kit is not ready.</p>
-      <p>Contact: <a href="mailto:${email}">${email}</a>.</p>
-      <h2>Logo</h2>
-      <ul class="downloads">
-        <li><a href="/assets/brand/lockup-horizontal-light-on-dark.svg" download>lockup, light on dark</a></li>
-        <li><a href="/assets/brand/lockup-horizontal-dark-on-light.svg" download>lockup, dark on light</a></li>
-        <li><a href="/assets/brand/icon-cursor-light.svg" download>icon, light</a></li>
-        <li><a href="/assets/brand/icon-cursor-dark.svg" download>icon, dark</a></li>
-        <li><a href="/assets/brand/icon-cursor-dark-1024.png" download>icon, 1024 png</a></li>
-      </ul>
-      <p>The wordmark is IBM Plex Mono Bold. nullblack is always lowercase.</p>`;
-}
-
 function gamePrivacyBody(site, game) {
   const slug = escapeHtml(game.slug);
   const title = escapeHtml(game.title);
@@ -138,7 +122,6 @@ export function hubPages(site) {
     { dir: "privacy", title: "privacy", description: "Privacy policy for nullblack and its games.", body: privacyBody(site) },
     { dir: "support", title: "support", description: "Support and data deletion for nullblack games.", body: supportBody(site) },
     { dir: "terms", title: "terms", description: "Terms for nullblack.com and its games.", body: termsBody(site) },
-    { dir: "press", title: "press", description: "Logos and press contact for nullblack.", body: pressBody(site) },
   ];
   for (const game of site.games) {
     pages.push({

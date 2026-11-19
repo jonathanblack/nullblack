@@ -3,6 +3,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { hubPages } from "../src/hub.mjs";
 import { site } from "../src/site.config.mjs";
+import { readPress, writePress } from "./press.mjs";
 import { renderIndex, renderNotFound } from "./render.mjs";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
@@ -52,13 +53,14 @@ for (const page of pages) {
   await mkdir(dir, { recursive: true });
   await writeFile(path.join(dir, "index.html"), page.html);
 }
+const press = await writePress(pub, site, await readPress(root, site));
 await writeFile(path.join(pub, "styles.css"), await readFile(path.join(root, "src", "styles.css")));
 await writeFile(path.join(pub, "site.webmanifest"), `${JSON.stringify(manifest, null, 2)}\n`);
 await writeFile(
   path.join(pub, "robots.txt"),
   "User-agent: *\nAllow: /\n\nSitemap: https://nullblack.com/sitemap.xml\n",
 );
-const locs = ["https://nullblack.com/", ...pages.map((page) => `https://nullblack.com${page.path}`)];
+const locs = ["https://nullblack.com/", ...[...pages, ...press].map((page) => `https://nullblack.com${page.path}`)];
 await writeFile(
   path.join(pub, "sitemap.xml"),
   `<?xml version="1.0" encoding="UTF-8"?>
