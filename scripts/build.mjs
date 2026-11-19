@@ -36,7 +36,7 @@ const manifest = {
   theme_color: "#000000",
   icons: [
     { src: "/favicon-32.png", sizes: "32x32", type: "image/png" },
-    { src: "/apple-touch-icon.png", sizes: "512x512", type: "image/png", purpose: "any" },
+    { src: "/apple-touch-icon.png", sizes: "180x180", type: "image/png", purpose: "any" },
   ],
 };
 
@@ -73,7 +73,8 @@ await cp(path.join(root, "src", "fonts"), path.join(pub, "fonts"), { recursive: 
 await cp(path.join(brand, "favicon.ico"), path.join(pub, "favicon.ico"));
 await cp(path.join(brand, "favicon-16.png"), path.join(pub, "favicon-16.png"));
 await cp(path.join(brand, "favicon-32.png"), path.join(pub, "favicon-32.png"));
-await cp(path.join(brand, "icon-512.png"), path.join(pub, "apple-touch-icon.png"));
+await cp(path.join(brand, "favicon-48.png"), path.join(pub, "favicon-48.png"));
+await cp(path.join(brand, "apple-touch-icon.png"), path.join(pub, "apple-touch-icon.png"));
 await copyOgImage();
 
 console.log("built public/");
