@@ -107,9 +107,9 @@ function pressBody(site) {
       <ul class="downloads">
         <li><a href="/assets/brand/lockup-horizontal-light-on-dark.svg" download>lockup, light on dark</a></li>
         <li><a href="/assets/brand/lockup-horizontal-dark-on-light.svg" download>lockup, dark on light</a></li>
-        <li><a href="/assets/brand/icon-light.svg" download>icon, light</a></li>
-        <li><a href="/assets/brand/icon-dark.svg" download>icon, dark</a></li>
-        <li><a href="/assets/brand/icon-1024.png" download>icon, 1024 png</a></li>
+        <li><a href="/assets/brand/icon-cursor-light.svg" download>icon, light</a></li>
+        <li><a href="/assets/brand/icon-cursor-dark.svg" download>icon, dark</a></li>
+        <li><a href="/assets/brand/icon-cursor-dark-1024.png" download>icon, 1024 png</a></li>
       </ul>
       <p>The wordmark is IBM Plex Mono Bold. nullblack is always lowercase.</p>`;
 }

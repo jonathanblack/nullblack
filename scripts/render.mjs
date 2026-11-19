@@ -1,6 +1,8 @@
 import { isPlaceholder } from "../src/site.config.mjs";
 
 const LOCKUP = "/assets/brand/lockup-horizontal-light-on-dark.svg";
+const LOCKUP_WIDTH = 4268;
+const LOCKUP_HEIGHT = 1024;
 
 export function escapeHtml(value) {
   return String(value).replace(/[&<>"']/g, (char) => {
@@ -90,6 +92,7 @@ function head(site, { title, description, path = "/" }) {
   <title>${escapeHtml(title)}</title>
   <link rel="canonical" href="${escapeHtml(canonical)}">
   <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
@@ -119,7 +122,7 @@ function header() {
   return `<a class="skip" href="#content">skip to content</a>
   <header class="site-header">
     <div class="shell">
-      <a class="brand" href="/">nullblack</a>
+      <a class="brand" href="/"><img src="${LOCKUP}" width="${LOCKUP_WIDTH}" height="${LOCKUP_HEIGHT}" alt="nullblack"></a>
       <nav class="nav" aria-label="primary">
         <a href="/#games">games</a>
         <a href="/#follow">follow</a>
@@ -175,7 +178,7 @@ export function renderIndex(site) {
     <section class="hero" aria-labelledby="studio-name">
       <div class="shell">
         <h1 id="studio-name">
-          <img class="lockup" src="${LOCKUP}" width="3954" height="1024" alt="nullblack" fetchpriority="high">
+          <img class="lockup" src="${LOCKUP}" width="${LOCKUP_WIDTH}" height="${LOCKUP_HEIGHT}" alt="nullblack" fetchpriority="high">
         </h1>
         <p class="tagline">${escapeHtml(site.tagline)}<span class="caret" aria-hidden="true"></span></p>
         <p class="lede">${escapeHtml(site.lede)}</p>

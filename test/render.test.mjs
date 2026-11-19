@@ -76,8 +76,10 @@ test("social profiles are linked from the config and escaped", () => {
 test("head metadata points at the favicon set, touch icon, and og image", () => {
   const html = renderIndex(site);
   assert.match(html, /href="\/favicon\.ico"/);
+  assert.match(html, /href="\/favicon-48\.png"/);
   assert.match(html, /href="\/favicon-32\.png"/);
   assert.match(html, /href="\/favicon-16\.png"/);
+  assert.match(html, /src="\/assets\/brand\/lockup-horizontal-light-on-dark\.svg"/);
   assert.match(html, /rel="apple-touch-icon" href="\/apple-touch-icon\.png"/);
   assert.match(html, /property="og:image" content="https:\/\/nullblack\.com\/og\.png"/);
   assert.match(html, /name="twitter:card" content="summary_large_image"/);
