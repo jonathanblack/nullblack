@@ -444,7 +444,7 @@ function studioBody(site, assets) {
           <dt>about</dt><dd>${escapeHtml(site.tagline)} ${escapeHtml(site.lede)}</dd>
           <dt>website</dt><dd><a href="/">nullblack.com</a></dd>
           <dt>press</dt><dd><a href="mailto:${email}">${email}</a></dd>
-          <dt>social</dt><dd>@nullblackgames on ${social}</dd>
+          <dt>social</dt><dd>${social}</dd>
           <dt>games</dt><dd>${site.games.length}</dd>
         </dl>
       </section>

@@ -4,7 +4,7 @@ import path from "node:path";
 import test from "node:test";
 import { fileURLToPath } from "node:url";
 import { isPlaceholder, site } from "../src/site.config.mjs";
-import { renderIndex, renderNotFound } from "../scripts/render.mjs";
+import { escapeHtml, renderIndex, renderNotFound } from "../scripts/render.mjs";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const emoji = /\p{Extended_Pictographic}/u;
@@ -19,25 +19,36 @@ test("placeholders are recognized and real urls are not", () => {
   assert.equal(isPlaceholder("press@nullblack.com"), false);
 });
 
-test("game cards link live games and each game's support and privacy", () => {
+test("game cards link press kits, live games, and platforms", () => {
   const html = renderIndex(site);
   assert.equal(site.games.length, 5);
-  assert.match(html, /href="https:\/\/fadedmaps\.com\/"/);
-  assert.match(html, /href="https:\/\/sheerfall\.com\/"/);
-  assert.match(html, /href="https:\/\/jurassiclegacy\.com\/"/);
-  assert.match(html, /href="https:\/\/cyberdeckruntime\.com\/"/);
-  assert.match(html, /href="https:\/\/cyberdeckpacket\.com\/"/);
-  for (const game of site.games) {
-    assert.match(html, new RegExp(`<article class="card" id="${game.id}">`));
-    assert.match(html, new RegExp(`href="/${game.slug}/support/"`));
-    assert.match(html, new RegExp(`href="/${game.slug}/privacy/"`));
-    assert.match(html, new RegExp(game.status.replace(/[.]/g, "\\.")));
+  const order = ["cyberdeck-runtime", "jurassic-legacy", "sheerfall", "fadedmaps", "cyberdeck-packet"];
+  let at = -1;
+  for (const slug of order) {
+    const found = html.indexOf(`/press/${slug}/`);
+    assert.ok(found > at, slug);
+    at = found;
   }
-  assert.match(html, /iOS, Android/);
+  for (const game of site.games) {
+    const src = game.homeArt || `/press/${game.slug}/assets/${game.art}`;
+    assert.match(html, new RegExp(`<article class="show" id="${game.id}"`));
+    assert.match(html, new RegExp(`href="/press/${game.slug}/"`));
+    assert.match(html, new RegExp(`href="${game.url.replace(/[.]/g, "\\.")}"`));
+    assert.match(html, new RegExp(escapeHtml(game.pitch).replace(/[.*+?^${}()|[\]\\]/g, "\\$&")));
+    assert.match(html, new RegExp(escapeHtml(game.status).replace(/[.*+?^${}()|[\]\\]/g, "\\$&")));
+    assert.match(html, new RegExp(escapeHtml(src).replace(/[.*+?^${}()|[\]\\]/g, "\\$&")));
+  }
+  assert.match(html, /iOS and Android/);
+  assert.doesNotMatch(html, /iOS, Android/);
   assert.match(html, /href="mailto:hello@nullblack\.com"/);
+  assert.match(html, /href="https:\/\/www\.instagram\.com\/nullblack_games\/"/);
+  assert.doesNotMatch(html, /tiktok|youtube|bluesky|discord/i);
   assert.doesNotMatch(html, /class="pending">TODO</);
   assert.match(html, /© 2026 nullblack/);
   assert.match(html, /small games, made late at night\./);
+  assert.match(html, /class="logo-null">null</);
+  assert.match(html, /class="logo-black">black</);
+  assert.match(html, /class="mark-bar caret"/);
   assert.doesNotMatch(html.replaceAll("©", ""), emoji);
 });
 
@@ -54,7 +65,7 @@ test("a filled-in url and email become links", () => {
   assert.match(html, /href="mailto:press@nullblack\.com"/);
   assert.match(html, /id="jurassic-legacy"/);
   assert.doesNotMatch(html, /id="jurassic-legacy" href=/);
-  assert.match(html, /<article class="card" id="jurassic-legacy">/);
+  assert.match(html, /<article class="show" id="jurassic-legacy"/);
 });
 
 test("social profiles are linked from the config and escaped", () => {
@@ -79,7 +90,7 @@ test("head metadata points at the favicon set, touch icon, and og image", () => 
   assert.match(html, /href="\/favicon-48\.png"/);
   assert.match(html, /href="\/favicon-32\.png"/);
   assert.match(html, /href="\/favicon-16\.png"/);
-  assert.match(html, /src="\/assets\/brand\/lockup-horizontal-light-on-dark\.svg"/);
+  assert.match(html, /class="logo-black">black</);
   assert.match(html, /rel="apple-touch-icon" href="\/apple-touch-icon\.png"/);
   assert.match(html, /property="og:image" content="https:\/\/nullblack\.com\/og\.png"/);
   assert.match(html, /name="twitter:card" content="summary_large_image"/);
@@ -118,6 +129,7 @@ test("hub pages name the studio, the games, and the footer", async () => {
     assert.ok(paths.includes(path), path);
   }
   const privacy = pages.find((page) => page.path === "/privacy/").html;
+  assert.match(privacy, /rel="canonical" href="https:\/\/nullblack\.com\/privacy\/"/);
   assert.match(privacy, /Jonathan Black, doing business as nullblack/);
   assert.match(privacy, /hello@nullblack\.com/);
   assert.match(privacy, /iOS and Android/);
@@ -171,6 +183,7 @@ test("press has a studio page and a kit for every game", async () => {
   assert.match(studio, /href="\/assets\/brand\/lockup-horizontal-light-on-dark\.svg" download/);
   assert.match(studio, /href="\/assets\/brand\/icon-cursor-dark-1024\.png" download/);
   assert.match(studio, /href="https:\/\/sheerfall\.com\/press\/"/);
+  assert.doesNotMatch(studio, /tiktok|youtube|bluesky|discord/i);
   for (const item of site.social) {
     assert.match(studio, new RegExp(`href="${item.url.replace(/[.]/g, "\\.")}"`));
   }

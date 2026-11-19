@@ -1,8 +1,12 @@
 import { isPlaceholder } from "../src/site.config.mjs";
 
-const LOCKUP = "/assets/brand/lockup-horizontal-light-on-dark.svg";
-const LOCKUP_WIDTH = 4268;
-const LOCKUP_HEIGHT = 1024;
+/** Homepage order. Games missing from this list still render, after these. */
+const SHOWCASE = ["cyberdeck-runtime", "jurassic-legacy", "sheerfall", "fadedmaps", "cyberdeck-packet"];
+
+function wordmark({ blink = false } = {}) {
+  const bar = blink ? "mark-bar caret" : "mark-bar";
+  return `<svg class="mark" viewBox="0 0 1024 1024" width="1024" height="1024" aria-hidden="true" focusable="false"><rect width="1024" height="1024" fill="currentColor"/><rect class="${bar}" x="654" y="814" width="260" height="100" fill="#000000"/></svg><span class="logo-words"><span class="logo-null">null</span><span class="logo-black">black</span></span>`;
+}
 
 export function escapeHtml(value) {
   return String(value).replace(/[&<>"']/g, (char) => {
@@ -25,7 +29,7 @@ export function escapeHtml(value) {
 
 function renderSocial(item) {
   const label = escapeHtml(item.label);
-  const hidden = `<span class="visually-hidden">, @nullblackgames</span>`;
+  const hidden = item.handle ? `<span class="visually-hidden">, ${escapeHtml(item.handle)}</span>` : "";
   if (isPlaceholder(item.url)) {
     return `<li><span class="pending">${label}${hidden}</span></li>`;
   }
@@ -42,24 +46,38 @@ function renderPress(email) {
   return `<p><a class="mail" href="mailto:${safe}">${safe}</a></p>`;
 }
 
+function showcaseGames(site) {
+  const bySlug = new Map(site.games.map((game) => [game.slug, game]));
+  const ordered = SHOWCASE.map((slug) => bySlug.get(slug)).filter(Boolean);
+  for (const game of site.games) {
+    if (!ordered.includes(game)) ordered.push(game);
+  }
+  return ordered;
+}
+
 function renderGame(game, index) {
   const title = escapeHtml(game.title);
   const slug = escapeHtml(game.slug);
-  const heading = isPlaceholder(game.url)
-    ? title
-    : `<a href="${escapeHtml(game.url)}">${title}</a>`;
+  const press = `/press/${slug}/`;
+  const accent = game.accent ? ` style="--accent: ${escapeHtml(game.accent)}"` : "";
+  const src = game.homeArt || (game.art ? `${press}assets/${game.art}` : "");
+  const eager = index === 0 ? ` fetchpriority="high"` : ` loading="lazy"`;
+  const art = src
+    ? `<a class="show-art" href="${press}" tabindex="-1" aria-hidden="true"><img src="${escapeHtml(src)}" width="${escapeHtml(game.artWidth || 1920)}" height="${escapeHtml(game.artHeight || 1080)}" alt=""${eager} decoding="async"></a>`
+    : "";
   const play = isPlaceholder(game.url)
     ? ""
-    : `<a href="${escapeHtml(game.url)}">play</a>`;
-  return `<li><article class="card" id="${escapeHtml(game.id)}">
-        <p class="kicker">${String(index + 1).padStart(2, "0")}</p>
-        <h3>${heading}</h3>
-        <p class="desc">${escapeHtml(game.description)}</p>
-        <p class="status">${escapeHtml(game.status)}</p>
-        <p class="card-links">${play}
-          <a href="/${slug}/support/">support</a>
-          <a href="/${slug}/privacy/">privacy</a>
-        </p>
+    : `<p class="show-actions"><a class="play" href="${escapeHtml(game.url)}">play<span class="visually-hidden"> ${title}</span></a></p>`;
+  const pitch = game.pitch || game.description || "";
+  return `<li><article class="show" id="${escapeHtml(game.id)}"${accent}>
+        ${art}
+        <div class="show-body">
+          <p class="kicker">${String(index + 1).padStart(2, "0")}</p>
+          <h3><a href="${press}">${title}</a></h3>
+          <p class="pitch">${escapeHtml(pitch)}</p>
+          <p class="status">${escapeHtml(game.status)}</p>
+          ${play}
+        </div>
       </article></li>`;
 }
 
@@ -101,6 +119,7 @@ function head(site, { title, description, path = "/", image: pageImage = null })
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <link rel="manifest" href="/site.webmanifest">
   <link rel="preload" href="/fonts/ibm-plex-mono-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/fonts/ibm-plex-mono-latin-700-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="/styles.css">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="${escapeHtml(site.name)}">
@@ -121,14 +140,16 @@ function head(site, { title, description, path = "/", image: pageImage = null })
 </head>`;
 }
 
-function header() {
+function header(path = "/") {
+  const onPress = path === "/press/" || path.startsWith("/press/");
+  const pressCurrent = onPress ? ` aria-current="page"` : "";
   return `<a class="skip" href="#content">skip to content</a>
   <header class="site-header">
     <div class="shell">
-      <a class="brand" href="/"><img src="${LOCKUP}" width="${LOCKUP_WIDTH}" height="${LOCKUP_HEIGHT}" alt="nullblack"></a>
+      <a class="brand" href="/">${wordmark()}</a>
       <nav class="nav" aria-label="primary">
         <a href="/#games">games</a>
-        <a href="/#follow">follow</a>
+        <a href="/press/"${pressCurrent}>press</a>
       </nav>
     </div>
   </header>`;
@@ -143,11 +164,21 @@ const HUB = [
 
 function footer(site, path = "/") {
   const links = HUB.map((item) => {
-    const current = path === item.href ? ` aria-current="page"` : "";
+    const here = path === item.href || (item.href === "/press/" && path.startsWith("/press/"));
+    const current = here ? ` aria-current="page"` : "";
     return `<a href="${item.href}"${current}>${item.label}</a>`;
   }).join("\n        ");
+  const social = site.social.map(renderSocial).join("\n          ");
   return `<footer class="site-footer">
     <div class="shell">
+      <div class="footer-top">
+        <nav id="follow" aria-label="social">
+          <ul class="social">
+          ${social}
+          </ul>
+        </nav>
+        ${renderPress(site.pressEmail)}
+      </div>
       <nav class="footer-nav" aria-label="studio">
         ${links}
       </nav>
@@ -159,7 +190,7 @@ function footer(site, path = "/") {
 export function renderPage(site, { title, description, path, body, image = null, wide = false }) {
   return `${head(site, { title: `${title} — ${site.name}`, description, path, image })}
 <body>
-  ${header()}
+  ${header(path)}
   <main id="content" class="doc${wide ? " wide" : ""}">
     <div class="shell">
       ${body}
@@ -172,41 +203,24 @@ export function renderPage(site, { title, description, path, body, image = null,
 }
 
 export function renderIndex(site) {
-  const games = site.games.map(renderGame).join("\n      ");
-  const social = site.social.map(renderSocial).join("\n          ");
+  const games = showcaseGames(site).map(renderGame).join("\n      ");
   return `${head(site, { title: site.name, description: site.description })}
-<body>
-  ${header()}
+<body class="home">
+  ${header("/")}
   <main id="content">
     <section class="hero" aria-labelledby="studio-name">
       <div class="shell">
-        <h1 id="studio-name">
-          <img class="lockup" src="${LOCKUP}" width="${LOCKUP_WIDTH}" height="${LOCKUP_HEIGHT}" alt="nullblack" fetchpriority="high">
-        </h1>
-        <p class="tagline">${escapeHtml(site.tagline)}<span class="caret" aria-hidden="true"></span></p>
+        <h1 id="studio-name" class="logo">${wordmark({ blink: true })}</h1>
+        <p class="tagline">${escapeHtml(site.tagline)}</p>
         <p class="lede">${escapeHtml(site.lede)}</p>
       </div>
     </section>
     <section class="section" id="games" aria-labelledby="games-label">
       <div class="shell">
         <h2 id="games-label">games</h2>
-        <ul class="games">
+        <ol class="showcase">
       ${games}
-        </ul>
-      </div>
-    </section>
-    <section class="section" id="follow" aria-labelledby="follow-label">
-      <div class="shell">
-        <h2 id="follow-label">follow</h2>
-        <div class="follow-grid">
-          <ul class="social">
-          ${social}
-          </ul>
-          <div class="press">
-            <h3>press and contact</h3>
-            ${renderPress(site.pressEmail)}
-          </div>
-        </div>
+        </ol>
       </div>
     </section>
   </main>
@@ -219,7 +233,7 @@ export function renderIndex(site) {
 export function renderNotFound(site) {
   return `${head(site, { title: `404 — ${site.name}`, description: "This page is empty." })}
 <body>
-  ${header()}
+  ${header("/")}
   <main id="content" class="missing">
     <div class="shell">
       <h1>404</h1>

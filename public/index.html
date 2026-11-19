@@ -15,6 +15,7 @@
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <link rel="manifest" href="/site.webmanifest">
   <link rel="preload" href="/fonts/ibm-plex-mono-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/fonts/ibm-plex-mono-latin-700-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="/styles.css">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="nullblack">
@@ -31,108 +32,97 @@
   <meta name="twitter:description" content="small games, made late at night. The studio of Jonathan Black.">
   <meta name="twitter:image" content="https://nullblack.com/og.png">
   <meta name="twitter:image:alt" content="nullblack">
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"nullblack","url":"https://nullblack.com/","description":"small games, made late at night. The studio of Jonathan Black.","logo":"https://nullblack.com/apple-touch-icon.png","founder":{"@type":"Person","name":"Jonathan Black"},"sameAs":["https://x.com/nullblackgames","https://www.tiktok.com/@nullblackgames","https://www.youtube.com/@nullblackgames","https://www.twitch.tv/nullblackgames","https://www.instagram.com/nullblackgames","https://bsky.app/profile/nullblackgames.bsky.social"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"nullblack","url":"https://nullblack.com/","description":"small games, made late at night. The studio of Jonathan Black.","logo":"https://nullblack.com/apple-touch-icon.png","founder":{"@type":"Person","name":"Jonathan Black"},"sameAs":["https://x.com/nullblackgames","https://www.instagram.com/nullblack_games/","https://www.twitch.tv/nullblackgames"]}</script>
 </head>
-<body>
+<body class="home">
   <a class="skip" href="#content">skip to content</a>
   <header class="site-header">
     <div class="shell">
-      <a class="brand" href="/"><img src="/assets/brand/lockup-horizontal-light-on-dark.svg" width="4268" height="1024" alt="nullblack"></a>
+      <a class="brand" href="/"><svg class="mark" viewBox="0 0 1024 1024" width="1024" height="1024" aria-hidden="true" focusable="false"><rect width="1024" height="1024" fill="currentColor"/><rect class="mark-bar" x="654" y="814" width="260" height="100" fill="#000000"/></svg><span class="logo-words"><span class="logo-null">null</span><span class="logo-black">black</span></span></a>
       <nav class="nav" aria-label="primary">
         <a href="/#games">games</a>
-        <a href="/#follow">follow</a>
+        <a href="/press/">press</a>
       </nav>
     </div>
   </header>
   <main id="content">
     <section class="hero" aria-labelledby="studio-name">
       <div class="shell">
-        <h1 id="studio-name">
-          <img class="lockup" src="/assets/brand/lockup-horizontal-light-on-dark.svg" width="4268" height="1024" alt="nullblack" fetchpriority="high">
-        </h1>
-        <p class="tagline">small games, made late at night.<span class="caret" aria-hidden="true"></span></p>
+        <h1 id="studio-name" class="logo"><svg class="mark" viewBox="0 0 1024 1024" width="1024" height="1024" aria-hidden="true" focusable="false"><rect width="1024" height="1024" fill="currentColor"/><rect class="mark-bar caret" x="654" y="814" width="260" height="100" fill="#000000"/></svg><span class="logo-words"><span class="logo-null">null</span><span class="logo-black">black</span></span></h1>
+        <p class="tagline">small games, made late at night.</p>
         <p class="lede">The studio of Jonathan Black.</p>
       </div>
     </section>
     <section class="section" id="games" aria-labelledby="games-label">
       <div class="shell">
         <h2 id="games-label">games</h2>
-        <ul class="games">
-      <li><article class="card" id="cyberdeck">
-        <p class="kicker">01</p>
-        <h3><a href="https://cyberdeckruntime.com/">Cyberdeck: Runtime</a></h3>
-        <p class="desc">An incremental cyberpunk hacking game.</p>
-        <p class="status">Coming to Steam Early Access, iOS, Android, and web.</p>
-        <p class="card-links"><a href="https://cyberdeckruntime.com/">play</a>
-          <a href="/cyberdeck-runtime/support/">support</a>
-          <a href="/cyberdeck-runtime/privacy/">privacy</a>
-        </p>
-      </article></li>
-      <li><article class="card" id="cyberdeck-packet">
-        <p class="kicker">02</p>
-        <h3><a href="https://cyberdeckpacket.com/">Cyberdeck: Packet</a></h3>
-        <p class="desc">Arrange a rig, then fight.</p>
-        <p class="status">Coming to web, iOS, Android, and Steam.</p>
-        <p class="card-links"><a href="https://cyberdeckpacket.com/">play</a>
-          <a href="/cyberdeck-packet/support/">support</a>
-          <a href="/cyberdeck-packet/privacy/">privacy</a>
-        </p>
-      </article></li>
-      <li><article class="card" id="jurassic-legacy">
-        <p class="kicker">03</p>
-        <h3><a href="https://jurassiclegacy.com/">Jurassic Legacy</a></h3>
-        <p class="desc">A dinosaur lineage runner.</p>
-        <p class="status">Coming to iOS, Android, and Steam.</p>
-        <p class="card-links"><a href="https://jurassiclegacy.com/">play</a>
-          <a href="/jurassic-legacy/support/">support</a>
-          <a href="/jurassic-legacy/privacy/">privacy</a>
-        </p>
-      </article></li>
-      <li><article class="card" id="sheerfall">
-        <p class="kicker">04</p>
-        <h3><a href="https://sheerfall.com/">Sheerfall</a></h3>
-        <p class="desc">A co-op roguelike for up to four players.</p>
-        <p class="status">Coming to web, then Steam.</p>
-        <p class="card-links"><a href="https://sheerfall.com/">play</a>
-          <a href="/sheerfall/support/">support</a>
-          <a href="/sheerfall/privacy/">privacy</a>
-        </p>
-      </article></li>
-      <li><article class="card" id="faded-maps">
-        <p class="kicker">05</p>
-        <h3><a href="https://fadedmaps.com/">Faded Maps</a></h3>
-        <p class="desc">A daily map puzzle.</p>
-        <p class="status">Play on the web.</p>
-        <p class="card-links"><a href="https://fadedmaps.com/">play</a>
-          <a href="/fadedmaps/support/">support</a>
-          <a href="/fadedmaps/privacy/">privacy</a>
-        </p>
-      </article></li>
-        </ul>
-      </div>
-    </section>
-    <section class="section" id="follow" aria-labelledby="follow-label">
-      <div class="shell">
-        <h2 id="follow-label">follow</h2>
-        <div class="follow-grid">
-          <ul class="social">
-          <li><a rel="me" href="https://x.com/nullblackgames">x<span class="visually-hidden">, @nullblackgames</span></a></li>
-          <li><a rel="me" href="https://www.tiktok.com/@nullblackgames">tiktok<span class="visually-hidden">, @nullblackgames</span></a></li>
-          <li><a rel="me" href="https://www.youtube.com/@nullblackgames">youtube<span class="visually-hidden">, @nullblackgames</span></a></li>
-          <li><a rel="me" href="https://www.twitch.tv/nullblackgames">twitch<span class="visually-hidden">, @nullblackgames</span></a></li>
-          <li><a rel="me" href="https://www.instagram.com/nullblackgames">instagram<span class="visually-hidden">, @nullblackgames</span></a></li>
-          <li><a rel="me" href="https://bsky.app/profile/nullblackgames.bsky.social">bluesky<span class="visually-hidden">, @nullblackgames</span></a></li>
-          </ul>
-          <div class="press">
-            <h3>press and contact</h3>
-            <p><a class="mail" href="mailto:hello@nullblack.com">hello@nullblack.com</a></p>
-          </div>
+        <ol class="showcase">
+      <li><article class="show" id="cyberdeck" style="--accent: #f5e400">
+        <a class="show-art" href="/press/cyberdeck-runtime/" tabindex="-1" aria-hidden="true"><img src="/assets/home/cyberdeck-runtime-key-art.webp" width="1600" height="900" alt="" fetchpriority="high" decoding="async"></a>
+        <div class="show-body">
+          <p class="kicker">01</p>
+          <h3><a href="/press/cyberdeck-runtime/">Cyberdeck: Runtime</a></h3>
+          <p class="pitch">Jack into a corp&#39;s servers, break their ICE, and build a rig that climbs deeper.</p>
+          <p class="status">Web demo. Coming to Steam Early Access, iOS and Android.</p>
+          <p class="show-actions"><a class="play" href="https://cyberdeckruntime.com/">play<span class="visually-hidden"> Cyberdeck: Runtime</span></a></p>
         </div>
+      </article></li>
+      <li><article class="show" id="jurassic-legacy" style="--accent: #e2622c">
+        <a class="show-art" href="/press/jurassic-legacy/" tabindex="-1" aria-hidden="true"><img src="/press/jurassic-legacy/assets/jurassic-legacy-key-art-1920x1080.png" width="1920" height="1080" alt="" loading="lazy" decoding="async"></a>
+        <div class="show-body">
+          <p class="kicker">02</p>
+          <h3><a href="/press/jurassic-legacy/">Jurassic Legacy</a></h3>
+          <p class="pitch">Run, die, evolve, and watch the volcano wake.</p>
+          <p class="status">Web demo. Coming to iOS and Android, and Steam.</p>
+          <p class="show-actions"><a class="play" href="https://jurassiclegacy.com/">play<span class="visually-hidden"> Jurassic Legacy</span></a></p>
+        </div>
+      </article></li>
+      <li><article class="show" id="sheerfall" style="--accent: #e76fc0">
+        <a class="show-art" href="/press/sheerfall/" tabindex="-1" aria-hidden="true"><img src="/press/sheerfall/assets/sheerfall-key-art-1920x1080.png" width="1920" height="1080" alt="" loading="lazy" decoding="async"></a>
+        <div class="show-body">
+          <p class="kicker">03</p>
+          <h3><a href="/press/sheerfall/">Sheerfall</a></h3>
+          <p class="pitch">You can&#39;t fight the Rot. You can only make it fall.</p>
+          <p class="status">On the web. iPhone, in beta.</p>
+          <p class="show-actions"><a class="play" href="https://sheerfall.com/">play<span class="visually-hidden"> Sheerfall</span></a></p>
+        </div>
+      </article></li>
+      <li><article class="show" id="faded-maps" style="--accent: #f2d27a">
+        <a class="show-art" href="/press/fadedmaps/" tabindex="-1" aria-hidden="true"><img src="/press/fadedmaps/assets/fadedmaps-key-art-1920x1080.png" width="1920" height="1080" alt="" loading="lazy" decoding="async"></a>
+        <div class="show-body">
+          <p class="kicker">04</p>
+          <h3><a href="/press/fadedmaps/">Faded Maps</a></h3>
+          <p class="pitch">Read the journals of a faded map, and work out where the mountains are.</p>
+          <p class="status">On the web, and on iPhone and iPad.</p>
+          <p class="show-actions"><a class="play" href="https://fadedmaps.com/">play<span class="visually-hidden"> Faded Maps</span></a></p>
+        </div>
+      </article></li>
+      <li><article class="show" id="cyberdeck-packet" style="--accent: #ffd400">
+        <a class="show-art" href="/press/cyberdeck-packet/" tabindex="-1" aria-hidden="true"><img src="/press/cyberdeck-packet/assets/cyberdeck-packet-key-art-1920x1080.png" width="1920" height="1080" alt="" loading="lazy" decoding="async"></a>
+        <div class="show-body">
+          <p class="kicker">05</p>
+          <h3><a href="/press/cyberdeck-packet/">Cyberdeck: Packet</a></h3>
+          <p class="pitch">Arrange a rig, then fight the corp&#39;s ICE.</p>
+          <p class="status">Web demo. Coming to iOS and Android, and Steam.</p>
+          <p class="show-actions"><a class="play" href="https://cyberdeckpacket.com/">play<span class="visually-hidden"> Cyberdeck: Packet</span></a></p>
+        </div>
+      </article></li>
+        </ol>
       </div>
     </section>
   </main>
   <footer class="site-footer">
     <div class="shell">
+      <div class="footer-top">
+        <nav id="follow" aria-label="social">
+          <ul class="social">
+          <li><a rel="me" href="https://x.com/nullblackgames">x<span class="visually-hidden">, @nullblackgames</span></a></li>
+          <li><a rel="me" href="https://www.instagram.com/nullblack_games/">instagram<span class="visually-hidden">, @nullblack_games</span></a></li>
+          <li><a rel="me" href="https://www.twitch.tv/nullblackgames">twitch<span class="visually-hidden">, @nullblackgames</span></a></li>
+          </ul>
+        </nav>
+        <p><a class="mail" href="mailto:hello@nullblack.com">hello@nullblack.com</a></p>
+      </div>
       <nav class="footer-nav" aria-label="studio">
         <a href="/privacy/">privacy</a>
         <a href="/support/">support</a>
