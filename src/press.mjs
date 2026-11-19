@@ -30,7 +30,7 @@ export const pressKits = {
     ],
     facts: [
       ["genre", "Daily logic puzzle"],
-      ["platforms", "Web browser, at fadedmaps.com. An iPhone and iPad version is in development."],
+      ["platforms", "iPhone and iPad (App Store), and web browser at fadedmaps.com"],
       ["players", "1"],
       ["controls", "Touch or mouse"],
       ["price", "Free, with an occasional ad between maps"],
