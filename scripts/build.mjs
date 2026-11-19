@@ -71,6 +71,7 @@ ${locs.map((loc) => `  <url><loc>${loc}</loc></url>`).join("\n")}
 );
 
 await cp(brand, path.join(pub, "assets", "brand"), { recursive: true });
+await cp(path.join(root, "assets", "home"), path.join(pub, "assets", "home"), { recursive: true });
 await cp(path.join(root, "src", "fonts"), path.join(pub, "fonts"), { recursive: true });
 await cp(path.join(brand, "favicon.ico"), path.join(pub, "favicon.ico"));
 await cp(path.join(brand, "favicon-16.png"), path.join(pub, "favicon-16.png"));

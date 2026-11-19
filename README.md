@@ -28,10 +28,10 @@ If this repo is instead a Pages project, set the build command to `npm run build
 
 Unpublished values stay in `src/site.config.mjs` as `TODO` and are left off the page. The site does not print that word.
 
-- Steam store URLs
-- Bluesky profile, if it is not `nullblackgames.bsky.social`
+- Steam, App Store, and Play store URLs
+- Discord, once an invite exists
 
-Press and contact is `hello@nullblack.com`. Social links for X, TikTok, YouTube, Twitch, Instagram, and Bluesky use `@nullblackgames`.
+Press and contact is `hello@nullblack.com`. The footer links X and Twitch (`@nullblackgames`) and Instagram (`@nullblack_games`).
 
 Studio pages, also linked in the footer: `/privacy/`, `/support/`, `/terms/`, `/press/`, and `/<slug>/privacy/` plus `/<slug>/support/` for fadedmaps, sheerfall, cyberdeck-runtime, cyberdeck-packet, and jurassic-legacy.
 

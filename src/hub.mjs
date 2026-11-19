@@ -140,6 +140,6 @@ export function hubPages(site) {
   return pages.map((page) => ({
     dir: page.dir,
     path: `/${page.dir}/`,
-    html: renderPage(site, page),
+    html: renderPage(site, { ...page, path: `/${page.dir}/` }),
   }));
 }
