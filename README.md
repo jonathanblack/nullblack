@@ -35,4 +35,10 @@ Press and contact is `hello@nullblack.com`. Social links for X, TikTok, YouTube,
 
 Studio pages, also linked in the footer: `/privacy/`, `/support/`, `/terms/`, `/press/`, and `/<slug>/privacy/` plus `/<slug>/support/` for fadedmaps, sheerfall, cyberdeck-runtime, cyberdeck-packet, and jurassic-legacy.
 
+## Press kits
+
+`/press/` is the studio press page: fact sheet, studio logos and a card per game. Each game has a kit at `/press/<slug>/`. The text and the list of files for each kit are in [`src/press.mjs`](src/press.mjs); the files themselves are in `assets/press/<slug>/`. The build copies them to `public/press/<slug>/assets/`, reads each PNG's size, and writes `public/press/<slug>/<slug>-press-kit.zip` (the kit's files plus a `fact-sheet.txt`) with Node built-ins (`scripts/zip.mjs`). A file named in `src/press.mjs` but missing from `assets/press/` fails the build.
+
+Screenshots come from each game's own build, played in headless Chromium. Sheerfall's kit is a copy of the one at sheerfall.com/press/.
+
 The wordmark is set in IBM Plex Mono, shipped as Latin woff2 files under `src/fonts/` with the SIL Open Font License.
