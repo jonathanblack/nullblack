@@ -32,7 +32,7 @@ test("game cards link press kits, live games, and platforms", () => {
   for (const game of site.games) {
     const src = game.homeArt || `/press/${game.slug}/assets/${game.art}`;
     assert.match(html, new RegExp(`<article class="show" id="${game.id}"`));
-    assert.match(html, new RegExp(`href="/press/${game.slug}/"`));
+    assert.match(html, new RegExp(`<h3><a class="show-title" href="/press/${game.slug}/">`));
     assert.match(html, new RegExp(`href="${game.url.replace(/[.]/g, "\\.")}"`));
     assert.match(html, new RegExp(escapeHtml(game.pitch).replace(/[.*+?^${}()|[\]\\]/g, "\\$&")));
     assert.match(html, new RegExp(escapeHtml(game.status).replace(/[.*+?^${}()|[\]\\]/g, "\\$&")));
@@ -102,6 +102,12 @@ test("reduced motion keeps the cursor visible and still", async () => {
   const css = await readFile(path.join(root, "src", "styles.css"), "utf8");
   assert.match(css, /@media \(prefers-reduced-motion: reduce\)/);
   assert.match(css, /\.caret\s*\{\s*animation:\s*none;/);
+});
+
+test("the card link covers the card and the play link stays above it", async () => {
+  const css = await readFile(path.join(root, "src", "styles.css"), "utf8");
+  assert.match(css, /\.show-title::after\s*\{[^}]*position:\s*absolute;[^}]*inset:\s*0;/s);
+  assert.match(css, /\.play\s*\{[^}]*z-index:\s*2;/s);
 });
 
 test("hub pages name the studio, the games, and the footer", async () => {

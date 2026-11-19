@@ -63,7 +63,7 @@ function renderGame(game, index) {
   const src = game.homeArt || (game.art ? `${press}assets/${game.art}` : "");
   const eager = index === 0 ? ` fetchpriority="high"` : ` loading="lazy"`;
   const art = src
-    ? `<a class="show-art" href="${press}" tabindex="-1" aria-hidden="true"><img src="${escapeHtml(src)}" width="${escapeHtml(game.artWidth || 1920)}" height="${escapeHtml(game.artHeight || 1080)}" alt=""${eager} decoding="async"></a>`
+    ? `<div class="show-art"><img src="${escapeHtml(src)}" width="${escapeHtml(game.artWidth || 1920)}" height="${escapeHtml(game.artHeight || 1080)}" alt=""${eager} decoding="async"></div>`
     : "";
   const play = isPlaceholder(game.url)
     ? ""
@@ -73,7 +73,7 @@ function renderGame(game, index) {
         ${art}
         <div class="show-body">
           <p class="kicker">${String(index + 1).padStart(2, "0")}</p>
-          <h3><a href="${press}">${title}</a></h3>
+          <h3><a class="show-title" href="${press}">${title}</a></h3>
           <p class="pitch">${escapeHtml(pitch)}</p>
           <p class="status">${escapeHtml(game.status)}</p>
           ${play}

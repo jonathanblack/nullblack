@@ -989,6 +989,13 @@ img.pixel {
   text-decoration: none;
 }
 
+.show-title::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
 .show h3 a:hover,
 .show:hover h3 a,
 .show:focus-within h3 a {
@@ -1028,7 +1035,7 @@ img.pixel {
 
 .play {
   position: relative;
-  z-index: 1;
+  z-index: 2;
   display: inline-flex;
   align-items: center;
   min-height: 2.75rem;
